@@ -2,7 +2,8 @@ import { ArrowSmDownIcon, ArrowSmUpIcon } from "@heroicons/react/solid";
 import {
   CursorClickIcon,
   MailOpenIcon,
-  UsersIcon,
+  UserIcon,
+  UserGroupIcon,
 } from "@heroicons/react/outline";
 
 const stats = [
@@ -10,7 +11,7 @@ const stats = [
     id: 1,
     name: "Nombre total d'étudiants",
     stat: "0%",
-    icon: CursorClickIcon,
+    icon: UserGroupIcon,
     change: "0.00%",
     changeType: "decrease",
   },
@@ -18,7 +19,7 @@ const stats = [
     id: 2,
     name: "Étudiant payant",
     stat: "0%",
-    icon: MailOpenIcon,
+    icon: UserIcon,
     change: "0.00%",
     changeType: "increase",
   },
@@ -26,7 +27,7 @@ const stats = [
     id: 3,
     name: "Étudiants gratuits",
     stat: "0%",
-    icon: UsersIcon,
+    icon: UserIcon,
     change: "0.00%",
     changeType: "increase",
   },

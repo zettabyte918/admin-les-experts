@@ -7,6 +7,7 @@ import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
+  UserCircleIcon,
   CalendarIcon,
   ChartBarIcon,
   FolderIcon,
@@ -215,12 +216,10 @@ export function GlobalLayout({ children }) {
               <Menu as="div" className="ml-3 relative">
                 <div>
                   <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <span className="sr-only">Open user menu</span>
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src={adminLogo.src}
-                      alt=""
-                    />
+                    <div className="bg-white p-1 rounded-full text-indigo-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                      <span className="sr-only">Open settings</span>
+                      <UserCircleIcon className="h-7 w-7" aria-hidden="true" />
+                    </div>
                   </Menu.Button>
                 </div>
                 <Transition
