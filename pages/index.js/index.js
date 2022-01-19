@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Logo from "../../public/logo.png";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
@@ -87,9 +88,9 @@ export default function Index() {
               </Transition.Child>
               <div className="flex-shrink-0 flex items-center px-4">
                 <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
-                  alt="Workflow"
+                  className="h-8 w-auto rounded-full"
+                  src={Logo.src}
+                  alt="Les Experts"
                 />
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -129,9 +130,9 @@ export default function Index() {
           <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
               <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
-                alt="Workflow"
+                className="h-8 w-auto rounded-full"
+                src={Logo.src}
+                alt="Les Experts"
               />
             </div>
             <div className="mt-5 flex-1 flex flex-col">
