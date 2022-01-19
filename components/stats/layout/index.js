@@ -40,7 +40,7 @@ export function Stats() {
   return (
     <div>
       <h3 className="text-lg leading-6 font-medium text-gray-900">
-        Last 30 days
+        Les 30 derniers jours
       </h3>
 
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,7 +93,7 @@ export function Stats() {
                     href="#"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >
-                    View all<span className="sr-only"> {item.name} stats</span>
+                    Voir tout<span className="sr-only"> {item.name} stats</span>
                   </a>
                 </div>
               </div>

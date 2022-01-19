@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import { Fragment } from "react";
-import GlobalLayout from "../components/GlobalLayout";
+import { GlobalLayout } from "../components/layout";
 
 const layouts = {
   GlobalLayout,

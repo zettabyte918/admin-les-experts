@@ -22,7 +22,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function GlobalLayout({ children }) {
+export function GlobalLayout({ children }) {
   const router = useRouter();
   const { pathname } = router;
 
