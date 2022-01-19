@@ -1,13 +1,23 @@
 import Head from "next/head";
-import { EmptyStateEleves } from "../../components/eleves";
+import { EmptyStateEleves, TableEleves } from "../../components/eleves";
 
 function Eleves() {
+  let users = true;
+  if (!users)
+    return (
+      <>
+        <Head>
+          <title>Eleves</title>
+        </Head>
+        <EmptyStateEleves />
+      </>
+    );
   return (
     <>
       <Head>
         <title>Eleves</title>
       </Head>
-      <EmptyStateEleves />
+      <TableEleves />
     </>
   );
 }
