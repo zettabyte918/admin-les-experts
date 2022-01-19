@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import Logo from "../../public/logo.png";
+import adminLogo from "../../public/admin.png";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
@@ -14,27 +16,37 @@ import {
   UsersIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { SearchIcon } from "@heroicons/react/solid";
-
-const navigation = [
-  { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
-  { name: "Team", href: "#", icon: UsersIcon, current: false },
-  { name: "Projects", href: "#", icon: FolderIcon, current: false },
-  { name: "Calendar", href: "#", icon: CalendarIcon, current: false },
-  { name: "Documents", href: "#", icon: InboxIcon, current: false },
-  { name: "Reports", href: "#", icon: ChartBarIcon, current: false },
-];
-const adminNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+import { useRouter } from "next/router";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Index() {
+export default function GlobalLayout({ children }) {
+  const router = useRouter();
+  const { pathname } = router;
+
+  const navigation = [
+    { name: "Dashboard", href: "/", icon: HomeIcon, current: pathname === "/" },
+    {
+      name: "Groups",
+      href: "/groupes",
+      icon: FolderIcon,
+      current: pathname === "/groupes",
+    },
+    {
+      name: "Eleves",
+      href: "/eleves",
+      icon: UsersIcon,
+      current: pathname === "/eleves",
+    },
+  ];
+  const adminNavigation = [
+    { name: "Your Profile", href: "#" },
+    { name: "Settings", href: "#" },
+    { name: "Sign out", href: "#" },
+  ];
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -96,22 +108,22 @@ export default function Index() {
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1">
                   {navigation.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className={classNames(
-                        item.current
-                          ? "bg-indigo-800 text-white"
-                          : "text-indigo-100 hover:bg-indigo-600",
-                        "group flex items-center px-2 py-2 text-base font-medium rounded-md"
-                      )}
-                    >
-                      <item.icon
-                        className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
+                    <Link key={item.name} href={item.href}>
+                      <a
+                        className={classNames(
+                          item.current
+                            ? "bg-indigo-800 text-white"
+                            : "text-indigo-100 hover:bg-indigo-600",
+                          "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                        )}
+                      >
+                        <item.icon
+                          className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
+                          aria-hidden="true"
+                        />
+                        {item.name}
+                      </a>
+                    </Link>
                   ))}
                 </nav>
               </div>
@@ -138,22 +150,22 @@ export default function Index() {
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 space-y-1">
                 {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-indigo-800 text-white"
-                        : "text-indigo-100 hover:bg-indigo-600",
-                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                    )}
-                  >
-                    <item.icon
-                      className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
+                  <Link key={item.href} href={item.href}>
+                    <a
+                      className={classNames(
+                        item.current
+                          ? "bg-indigo-800 text-white"
+                          : "text-indigo-100 hover:bg-indigo-600",
+                        "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                      )}
+                    >
+                      <item.icon
+                        className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </a>
+                  </Link>
                 ))}
               </nav>
             </div>
@@ -170,8 +182,8 @@ export default function Index() {
             <span className="sr-only">Open sidebar</span>
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
-          <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex">
+          <div className="flex-1 px-4 flex justify-end">
+            {/* search components *justify-between* <div className="flex-1 flex">
               <form className="w-full flex md:ml-0" action="#" method="GET">
                 <label htmlFor="search-field" className="sr-only">
                   Search
@@ -189,7 +201,7 @@ export default function Index() {
                   />
                 </div>
               </form>
-            </div>
+            </div> */}
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
@@ -206,7 +218,7 @@ export default function Index() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={adminLogo.src}
                       alt=""
                     />
                   </Menu.Button>
@@ -245,17 +257,13 @@ export default function Index() {
 
         <main className="flex-1 relative overflow-y-auto focus:outline-none">
           <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+            {/* todo title <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-semibold text-gray-900">
                 Dashboard
               </h1>
-            </div>
+            </div> */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {/* Replace with your content */}
-              <div className="py-4">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-              </div>
-              {/* /End replace */}
+              {children}
             </div>
           </div>
         </main>
