@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../public/logo.png";
-import adminLogo from "../../public/admin.png";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
@@ -18,6 +17,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import { useSession, signOut } from "next-auth/react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -42,11 +42,7 @@ export function GlobalLayout({ children }) {
       current: pathname === "/eleves",
     },
   ];
-  const adminNavigation = [
-    { name: "Your Profile", href: "#" },
-    { name: "Settings", href: "#" },
-    { name: "Sign out", href: "#" },
-  ];
+  const adminNavigation = [{ name: "Sign out", href: "#" }];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -237,6 +233,12 @@ export function GlobalLayout({ children }) {
                         {({ active }) => (
                           <a
                             href={item.href}
+                            onClick={() => {
+                              signOut({
+                                callbackUrl:
+                                  "http://localhost:3000/auth/signin",
+                              });
+                            }}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
