@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-const Post = () => {
+const Imprimer = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  return <p>Post: {id}</p>;
+  return <p>Imprimer: {id}</p>;
 };
 
-export default Post;
+export default Imprimer;

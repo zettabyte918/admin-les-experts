@@ -2,9 +2,8 @@ import "../styles/globals.css";
 import { Fragment } from "react";
 import { SessionProvider } from "next-auth/react";
 import { GlobalLayout } from "../components/layout";
-import { UserRegistration } from "../components/slides";
-import { UserRegistrationProvide } from "../components/slides/userRegistration/context";
-
+import { NotificationProvider, Notification } from "../components/Notification";
+import { ApiContext } from "../axios";
 const layouts = {
   GlobalLayout,
 };
@@ -13,12 +12,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const Layout = layouts[Component?.layout] || Fragment;
   return (
     <SessionProvider session={session}>
-      <UserRegistrationProvide>
-        <Layout>
-          <Component {...pageProps} />
-          <UserRegistration />
-        </Layout>
-      </UserRegistrationProvide>
+      <NotificationProvider>
+        <Notification />
+        <ApiContext>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ApiContext>
+      </NotificationProvider>
     </SessionProvider>
   );
 }

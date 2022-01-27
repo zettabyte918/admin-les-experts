@@ -33,13 +33,13 @@ export function GlobalLayout({ children }) {
       name: "Groups",
       href: "/groupes",
       icon: FolderIcon,
-      current: pathname === "/groupes",
+      current: pathname.startsWith("/groupes"),
     },
     {
       name: "Eleves",
       href: "/eleves",
       icon: UsersIcon,
-      current: pathname === "/eleves",
+      current: pathname.startsWith("/eleves"),
     },
   ];
   const adminNavigation = [{ name: "Sign out", href: "#" }];

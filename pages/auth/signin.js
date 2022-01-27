@@ -43,7 +43,7 @@ export default function Signin() {
               connectez-vous à votre compte
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Panneau d'administration Les Expert
+              Panneau d&apos;administration Les Expert
             </p>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST">

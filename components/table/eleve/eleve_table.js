@@ -1,0 +1,132 @@
+import Link from "next/link";
+import { useMemo } from "react";
+import { useTable, useGlobalFilter, usePagination } from "react-table";
+import { COLUMNS } from "./columns";
+import { PlusIcon } from "@heroicons/react/solid";
+import { EmptyStateEleves } from "./emptyStateEleves";
+import { GlobalFilter } from "./filter";
+import { TableFooter } from "./tableFooter";
+
+export function TableEleve({ datas }) {
+  const columns = useMemo(() => COLUMNS, []);
+  const data = useMemo(() => datas, [datas]);
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    state,
+    setGlobalFilter,
+    page,
+    nextPage,
+    previousPage,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    gotoPage,
+    pageCount,
+    setPageSize,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageSize: 3, pageIndex: 0 },
+    },
+    useGlobalFilter,
+    usePagination
+  );
+  const { globalFilter, pageIndex, pageSize } = state;
+
+  return (
+    <>
+      <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <div className="flex justify-end  md:flex-1 w-full mb-2 md:mb-0">
+          <Link href="/eleves/ajouter">
+            <a
+              type="button"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              Nouvel étudiant
+            </a>
+          </Link>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table
+                {...getTableProps()}
+                className="min-w-full divide-y divide-gray-200"
+              >
+                <thead className="bg-gray-50">
+                  {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column) => (
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          {...column.getHeaderProps()}
+                        >
+                          {column.render("Header")}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody
+                  {...getTableBodyProps()}
+                  className="bg-white divide-y divide-gray-200"
+                >
+                  {pageCount ? (
+                    <>
+                      {page.map((row) => {
+                        prepareRow(row);
+                        return (
+                          <tr {...row.getRowProps()}>
+                            {row.cells.map((cell) => {
+                              return (
+                                <td
+                                  className="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                                  {...cell.getCellProps()}
+                                >
+                                  {cell.render("Cell")}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        );
+                      })}
+                      <tr>
+                        <td colSpan={5}>
+                          <TableFooter
+                            previousPage={previousPage}
+                            canPreviousPage={canPreviousPage}
+                            nextPage={nextPage}
+                            canNextPage={canNextPage}
+                            pageIndex={pageIndex}
+                            pageSize={pageSize}
+                            pageCount={pageCount}
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  ) : (
+                    <tr>
+                      <td colSpan={5}>
+                        <EmptyStateEleves />
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

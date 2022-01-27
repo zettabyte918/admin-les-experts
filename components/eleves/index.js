@@ -1,2 +1,2 @@
 export { EmptyStateEleves } from "./layout/emptyStateEleves";
-export { TableEleves } from "./tableContents/table";
+export { Table } from "./tableContents/table";
