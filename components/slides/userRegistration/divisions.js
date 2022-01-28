@@ -120,7 +120,3 @@ export const divisions = [
     name: "Bac Techniques",
   },
 ];
-
-export default {
-  divisions,
-};
