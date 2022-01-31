@@ -24,9 +24,9 @@ const AjouterEleve = () => {
   return (
     <>
       <Head>
-        <title>Ajouter un étudiant</title>
+        <title>Ajouter un élève</title>
       </Head>
-      <HeaderText text={"Ajouter de nouveaux étudiants"} />
+      <HeaderText text={"Ajouter un nouvel élève"} />
       <div className="flex py-2 justify-start">
         <div className="">
           <Link href="/eleves">
@@ -272,7 +272,7 @@ const AjouterEleve = () => {
                     }}
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Ajouter un étudiant
+                    Ajouter cet élève
                   </button>
                 </div>
               </div>

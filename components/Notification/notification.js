@@ -12,7 +12,7 @@ export function Notification() {
       {/* Global notification live region, render this permanently at the end of the document */}
       <div
         aria-live="assertive"
-        className="fixed inset-0 flex items-end z-20 px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
+        className="print:hidden fixed inset-0 flex items-end z-20 px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
       >
         <div className="w-full flex flex-col items-center space-y-3 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
@@ -39,9 +39,12 @@ export function Notification() {
                       <p className="text-sm font-medium text-gray-900">
                         {notification.header}
                       </p>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {notification.content}
-                      </p>
+                      <div
+                        className="mt-1 text-sm text-gray-500"
+                        dangerouslySetInnerHTML={{
+                          __html: notification.content,
+                        }}
+                      ></div>
                     </div>
                     <div className="ml-4 flex-shrink-0 flex">
                       <button

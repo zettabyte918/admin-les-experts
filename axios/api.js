@@ -1,12 +1,14 @@
 import React, { createContext, useContext } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useNotification } from "../components/Notification";
+import { useRouter } from "next/router";
 
 import axios from "axios";
 
 export const strapiApi = createContext();
 
 export const ApiContext = ({ children }) => {
+  const router = useRouter();
   const { data: session } = useSession();
   const { addNotification } = useNotification();
 
@@ -26,8 +28,14 @@ export const ApiContext = ({ children }) => {
       return response;
     },
     function (error) {
-      const { response } = error;
-      if (response.status == 401 || response.status == 403) {
+      try {
+        const { response } = error;
+        if (response.status == 401 || response.status == 403) {
+          return signOut({
+            callbackUrl: process.env.NEXT_PUBLIC_ADMIN_AUTH_SIGNIN,
+          });
+        }
+      } catch {
         return signOut({
           callbackUrl: process.env.NEXT_PUBLIC_ADMIN_AUTH_SIGNIN,
         });
@@ -62,9 +70,55 @@ export const ApiContext = ({ children }) => {
     return await api.get("/groupes");
   };
 
+  const getStudentById = async (id) => {
+    if (id) return await api.get(`/experts-users/${id}`);
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/eleves");
+  };
+
+  const addGroup = async (inputValues) => {
+    if (!inputValues.nom)
+      return addNotification(
+        "DANGER",
+        "Mauvais format",
+        `le champ du <b>nom</b> est obligatoire`
+      );
+    if (!inputValues.description)
+      return addNotification(
+        "DANGER",
+        "Mauvais format",
+        `le champ du <b>description</b> est obligatoire`
+      );
+
+    const data = {
+      data: {
+        ...inputValues,
+      },
+    };
+
+    console.log(data);
+    await api.post("/groupes", JSON.stringify(data));
+    return addNotification(
+      "SUCCESS",
+      "Succès",
+      `<b>${data.data.nom}</b> a été créé`
+    );
+  };
+
   return (
     <strapiApi.Provider
-      value={{ api, addStudent, getAllStudents, getAllGroups }}
+      value={{
+        api,
+        addStudent,
+        getAllStudents,
+        getAllGroups,
+        getStudentById,
+        addGroup,
+      }}
     >
       {children}
     </strapiApi.Provider>

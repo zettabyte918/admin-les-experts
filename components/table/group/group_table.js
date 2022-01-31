@@ -43,7 +43,7 @@ export function TableGroup({ datas }) {
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         <div className="flex justify-end  md:flex-1 w-full mb-2 md:mb-0">
-          <Link href="/eleves/ajouter">
+          <Link href="/groupes/ajouter">
             <a
               type="button"
               className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
