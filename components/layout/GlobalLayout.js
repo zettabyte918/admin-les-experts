@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
@@ -19,7 +19,6 @@ function classNames(...classes) {
 
 export function GlobalLayout({ children }) {
   const { data: session, status } = useSession();
-  console.log(status);
   const router = useRouter();
   const { pathname } = router;
 
@@ -135,34 +134,71 @@ export function GlobalLayout({ children }) {
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
             <div className="flex flex-col flex-shrink-0 pb-4 px-4">
-              <span className=" font-bold text-gray-200 text-3xl">
-                LES EXPERTS
-              </span>
-              <span className="font-semibold text-indigo-300 text-xs">
-                CENTER D&apos;ASSISTANCE SCOLAIRE
-              </span>
+              <Transition
+                appear={true}
+                show={true}
+                as={Fragment}
+                enter="transform ease-out duration-500 transition"
+                enterFrom="-translate-x-4 opacity-0"
+                enterTo="-translate-x-0 opacity-100"
+                leave="transition ease-in duration-200"
+                leaveFrom="translate-x-0 opacity-100"
+                leaveTo="translate-x-2 opacity-0"
+              >
+                <span className=" font-bold text-gray-200 text-3xl">
+                  LES EXPERTS
+                </span>
+              </Transition>
+
+              <Transition
+                appear={true}
+                show={true}
+                as={Fragment}
+                enter="transform ease-out duration-500 transition"
+                enterFrom="-translate-y-2 opacity-0"
+                enterTo="translate-y-0 opacity-100"
+                leave="transition ease-in duration-200"
+                leaveFrom="translate-x-0 opacity-100"
+                leaveTo="translate-x-2 opacity-0"
+              >
+                <span className="font-semibold text-indigo-300 text-xs">
+                  CENTER D&apos;ASSISTANCE SCOLAIRE
+                </span>
+              </Transition>
             </div>
             <div className="mt-5 flex-1 flex flex-col">
-              <nav className="flex-1 px-2 space-y-1">
-                {navigation.map((item) => (
-                  <Link key={item.href} href={item.href}>
-                    <a
-                      className={classNames(
-                        item.current
-                          ? "bg-indigo-800 text-white"
-                          : "text-indigo-100 hover:bg-indigo-600",
-                        "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                      )}
-                    >
-                      <item.icon
-                        className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </a>
-                  </Link>
-                ))}
-              </nav>
+              <Transition
+                appear={true}
+                show={true}
+                as={Fragment}
+                enter="transform ease-out duration-500 transition"
+                enterFrom="-translate-y-2 opacity-0"
+                enterTo="translate-y-0 opacity-100"
+                leave="transition ease-in duration-200"
+                leaveFrom="translate-x-0 opacity-100"
+                leaveTo="translate-x-2 opacity-0"
+              >
+                <nav className="flex-1 px-2 space-y-1">
+                  {navigation?.map((item, id) => (
+                    <Link key={id} href={item.href}>
+                      <a
+                        className={classNames(
+                          item.current
+                            ? "bg-indigo-800 text-white"
+                            : "text-indigo-100 hover:bg-indigo-600",
+                          "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                        )}
+                      >
+                        <item.icon
+                          className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
+                          aria-hidden="true"
+                        />
+                        {item.name}
+                      </a>
+                    </Link>
+                  ))}
+                </nav>
+              </Transition>
             </div>
           </div>
         </div>
