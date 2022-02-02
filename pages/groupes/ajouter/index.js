@@ -100,7 +100,7 @@ const AjouterGroupes = () => {
         </div>
       </div>
 
-      <div className="mt-10 md:px-4 sm:mt-0">
+      <div className="mt-10  sm:mt-0">
         <div className="shadow overflow-hidden sm:rounded-md">
           <div className="px-4 py-3 bg-gray-200 text-right sm:px-6">
             <button

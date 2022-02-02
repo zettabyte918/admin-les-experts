@@ -96,7 +96,7 @@ export function GlobalLayout({ children }) {
                   LES EXPERTS
                 </span>
                 <span className="font-semibold text-gray-300 text-xs">
-                  CENTER D'ASSISTANCE SCOLAIRE
+                  CENTER D&apos;ASSISTANCE SCOLAIRE
                 </span>
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -139,7 +139,7 @@ export function GlobalLayout({ children }) {
                 LES EXPERTS
               </span>
               <span className="font-semibold text-indigo-300 text-xs">
-                CENTER D'ASSISTANCE SCOLAIRE
+                CENTER D&apos;ASSISTANCE SCOLAIRE
               </span>
             </div>
             <div className="mt-5 flex-1 flex flex-col">

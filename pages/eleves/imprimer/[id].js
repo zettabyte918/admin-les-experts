@@ -39,7 +39,7 @@ const Imprimer = () => {
         <img width={100} src={Logo.src}></img>
         <div className="text-center">
           <h1 className=" text-4xl font-bold text-red-500">LES EXPERTS</h1>
-          <h2 className="text-gray-500">CENTER D'ASSISTANCE SCOLAIRE</h2>
+          <h2 className="text-gray-500">CENTER D&apos;ASSISTANCE SCOLAIRE</h2>
         </div>
       </div>
       <div className="py-5"></div>
@@ -60,7 +60,7 @@ const Imprimer = () => {
             htmlFor="last_name_parents"
             className="block text-sm font-medium text-gray-700"
           >
-            Nom complet de L'élève
+            Nom complet de L&apos;élève
           </label>
           <input
             type="text"
@@ -93,7 +93,7 @@ const Imprimer = () => {
             htmlFor="first_name_parents"
             className="block text-sm font-medium text-gray-700"
           >
-            Nom d'utilisateur
+            Nom d&apos;utilisateur
           </label>
           <input
             type="text"

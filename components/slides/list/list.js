@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { CheckIcon, ThumbUpIcon, UserIcon } from "@heroicons/react/solid";
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { useList } from "./context";
 
 function ListStudents() {
-  const { stduents = [], open, setOpen } = useList();
-
+  const { students = [], open, setOpen } = useList();
+  console.log(students);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -57,22 +58,44 @@ function ListStudents() {
                     </div>
                   </div>
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
-                    {stduents?.map((student, id) => (
-                      <div className="flex justify-between py-2">
-                        <dt className="text-sm font-medium text-gray-900 sm:w-40 sm:flex-shrink-0 lg:w-48">
-                          <span className="text-gray-300">{id + 1}. </span>
-                          {student.name_eleve}
-                        </dt>
-                        <span className="inline-flex flex-shrink-0  items-center px-2.5 mr-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                          {student.pack.nom}
-                        </span>
-                        <Link href={`/eleves/imprimer/${student.id}`}>
-                          <a className="text-right ml-2 text-indigo-600 hover:text-indigo-900">
-                            Imprimer
-                          </a>
-                        </Link>
-                      </div>
-                    ))}
+                    <div className="flow-root">
+                      <ul role="list" className="-mb-8">
+                        {students?.map((student, eventIdx) => (
+                          <li key={eventIdx}>
+                            <div className="relative pb-6">
+                              {eventIdx !== students.length - 1 ? (
+                                <span
+                                  className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
+                                  aria-hidden="true"
+                                />
+                              ) : null}
+                              <div className="relative flex space-x-3">
+                                <div>
+                                  <span className="bg-gray-400 h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white">
+                                    <UserIcon
+                                      className="h-5 w-5 text-white"
+                                      aria-hidden="true"
+                                    />
+                                  </span>
+                                </div>
+                                <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
+                                  <div>
+                                    <p className="text-sm text-gray-500">
+                                      {student.name_eleve}
+                                    </p>
+                                  </div>
+                                  <div className="text-right text-sm whitespace-nowrap text-gray-500">
+                                    <span className="inline-flex flex-shrink-0  items-center px-2.5 mr-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                                      {student.pack.nom}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

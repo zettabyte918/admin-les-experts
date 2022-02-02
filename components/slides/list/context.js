@@ -4,10 +4,10 @@ export const listStudents = createContext();
 
 export const ListStudentsProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const [stduents, setStudents] = useState([]);
+  const [students, setStudents] = useState([]);
 
   return (
-    <listStudents.Provider value={{ open, setOpen, stduents, setStudents }}>
+    <listStudents.Provider value={{ open, setOpen, students, setStudents }}>
       {children}
     </listStudents.Provider>
   );

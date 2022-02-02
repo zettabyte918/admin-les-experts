@@ -85,16 +85,7 @@ export function Stats({ count }) {
                 </span>
                 {item.change}
               </p>
-              <div className="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-medium text-indigo-600 hover:text-indigo-500"
-                  >
-                    Voir tout<span className="sr-only"> {item.name} stats</span>
-                  </a>
-                </div>
-              </div>
+              <div className="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6"></div>
             </dd>
           </div>
         ))}

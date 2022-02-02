@@ -4,7 +4,7 @@ import { Stats } from "../components/stats";
 import { useSession } from "next-auth/react";
 import { useApi } from "../axios";
 
-function index() {
+function Index() {
   const { data: session } = useSession();
   const [count, setCount] = useState(0);
   const { countAllStudents } = useApi();
@@ -27,6 +27,5 @@ function index() {
   );
 }
 
-index.layout = "GlobalLayout";
-
-export default index;
+Index.layout = "GlobalLayout";
+export default Index;
