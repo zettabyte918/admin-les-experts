@@ -60,10 +60,10 @@ function ListStudents() {
                   <div className="mt-6 relative flex-1 px-4 sm:px-6">
                     <div className="flow-root">
                       <ul role="list" className="-mb-8">
-                        {students?.map((student, eventIdx) => (
-                          <li key={eventIdx}>
+                        {students?.map((student, id) => (
+                          <li key={id}>
                             <div className="relative pb-6">
-                              {eventIdx !== students.length - 1 ? (
+                              {id !== students.length - 1 ? (
                                 <span
                                   className="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"
                                   aria-hidden="true"
@@ -81,6 +81,9 @@ function ListStudents() {
                                 <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                                   <div>
                                     <p className="text-sm text-gray-500">
+                                      <span className="text-gray-400 text-xs">
+                                        {id + 1}.
+                                      </span>
                                       {student.name_eleve}
                                     </p>
                                   </div>
