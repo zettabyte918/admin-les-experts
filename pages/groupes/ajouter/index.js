@@ -17,8 +17,6 @@ const AjouterGroupes = () => {
     setInputValues({ [name]: value });
   };
 
-  console.log(inputValues);
-
   return (
     <>
       <Head>

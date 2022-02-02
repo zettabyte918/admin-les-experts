@@ -43,16 +43,24 @@ export const ApiContext = ({ children }) => {
     }
   );
 
-  const addStudent = async (selected, inputValues) => {
-    if (!selected)
+  const addStudent = async (selectedPack, selectedGroup, inputValues) => {
+    if (!selectedPack)
       return addNotification(
         "DANGER",
         "Pack introuvable",
-        "veuillez sélectionner un pack valide"
+        "veuillez sélectionner un <b>pack</b> valide"
+      );
+
+    if (!selectedGroup)
+      return addNotification(
+        "DANGER",
+        "Pack introuvable",
+        "veuillez sélectionner un <b>groupe</b> valide"
       );
     const user = {
       ...inputValues,
-      pack: selected.id,
+      pack: selectedPack.id,
+      group: selectedGroup.id,
     };
     await api.post("/experts-users", JSON.stringify(user));
     return addNotification(
@@ -66,10 +74,6 @@ export const ApiContext = ({ children }) => {
     return await api.get("/experts-users");
   };
 
-  const getAllGroups = async () => {
-    return await api.get("/groupes");
-  };
-
   const getStudentById = async (id) => {
     if (id) return await api.get(`/experts-users/${id}`);
     addNotification(
@@ -78,6 +82,10 @@ export const ApiContext = ({ children }) => {
       "merci de rafraichir cette page"
     );
     return router.push("/eleves");
+  };
+
+  const countAllStudents = async () => {
+    return await api.get("/experts-users/count");
   };
 
   const addGroup = async (inputValues) => {
@@ -100,13 +108,16 @@ export const ApiContext = ({ children }) => {
       },
     };
 
-    console.log(data);
     await api.post("/groupes", JSON.stringify(data));
     return addNotification(
       "SUCCESS",
       "Succès",
       `<b>${data.data.nom}</b> a été créé`
     );
+  };
+
+  const getAllGroups = async () => {
+    return await api.get("/groupes");
   };
 
   return (
@@ -117,6 +128,7 @@ export const ApiContext = ({ children }) => {
         getAllStudents,
         getAllGroups,
         getStudentById,
+        countAllStudents,
         addGroup,
       }}
     >

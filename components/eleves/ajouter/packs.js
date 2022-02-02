@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useApi } from "../../../axios";
 import { RadioGroup } from "@headlessui/react";
@@ -7,7 +7,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Packs = ({ packs, setPack, selected, setSelected }) => {
+const Packs = ({ selected, setSelected }) => {
+  const [packs, setPack] = useState([]);
+
   const { data: session } = useSession();
   const { api } = useApi();
 
@@ -25,16 +27,14 @@ const Packs = ({ packs, setPack, selected, setSelected }) => {
     <RadioGroup value={selected} onChange={setSelected}>
       <RadioGroup.Label className="sr-only">packs</RadioGroup.Label>
       <div className="bg-white rounded-md -space-y-px">
-        {packs.map((pack, packIdx) => (
+        {packs?.map((pack, id) => (
           <RadioGroup.Option
-            key={packIdx}
+            key={id}
             value={pack}
             className={({ checked }) =>
               classNames(
-                packIdx === 0 ? "rounded-tl-md rounded-tr-md" : "",
-                packIdx === packs.length - 1
-                  ? "rounded-bl-md rounded-br-md"
-                  : "",
+                id === 0 ? "rounded-tl-md rounded-tr-md" : "",
+                id === packs.length - 1 ? "rounded-bl-md rounded-br-md" : "",
                 checked
                   ? "bg-indigo-50 border-indigo-200 z-10"
                   : "border-gray-200",

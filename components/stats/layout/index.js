@@ -7,38 +7,37 @@ import {
 } from "@heroicons/react/outline";
 import { HeaderText } from "../../layout";
 
-const stats = [
-  {
-    id: 1,
-    name: "Nombre total d'étudiants",
-    stat: "0%",
-    icon: UserGroupIcon,
-    change: "0.00%",
-    changeType: "decrease",
-  },
-  {
-    id: 2,
-    name: "Étudiant payant",
-    stat: "0%",
-    icon: UserIcon,
-    change: "0.00%",
-    changeType: "increase",
-  },
-  {
-    id: 3,
-    name: "Étudiants gratuits",
-    stat: "0%",
-    icon: UserIcon,
-    change: "0.00%",
-    changeType: "increase",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function Stats() {
+export function Stats({ count }) {
+  const stats = [
+    {
+      id: 1,
+      name: "Nombre total d'étudiants",
+      stat: count,
+      icon: UserGroupIcon,
+      change: "0.00%",
+      changeType: "decrease",
+    },
+    {
+      id: 2,
+      name: "Étudiant payant",
+      stat: count,
+      icon: UserIcon,
+      change: "0.00%",
+      changeType: "increase",
+    },
+    {
+      id: 3,
+      name: "Étudiants gratuits",
+      stat: "0%",
+      icon: UserIcon,
+      change: "0.00%",
+      changeType: "increase",
+    },
+  ];
   return (
     <div>
       <HeaderText text={"Dernières statistiques"} />

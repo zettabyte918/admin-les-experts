@@ -1,17 +1,11 @@
-import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../public/logo.png";
 import { Fragment, useState } from "react";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
   UserCircleIcon,
-  CalendarIcon,
-  ChartBarIcon,
   FolderIcon,
   HomeIcon,
-  InboxIcon,
   MenuAlt2Icon,
   UsersIcon,
   XIcon,
@@ -24,6 +18,8 @@ function classNames(...classes) {
 }
 
 export function GlobalLayout({ children }) {
+  const { data: session, status } = useSession();
+  console.log(status);
   const router = useRouter();
   const { pathname } = router;
 
@@ -42,7 +38,7 @@ export function GlobalLayout({ children }) {
       current: pathname.startsWith("/eleves"),
     },
   ];
-  const adminNavigation = [{ name: "Sign out", href: "#" }];
+  const adminNavigation = [{ name: "se déconnecter", href: "#" }];
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -95,12 +91,13 @@ export function GlobalLayout({ children }) {
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 flex items-center px-4">
-                <img
-                  className="h-8 w-auto rounded-full"
-                  src={Logo.src}
-                  alt="Les Experts"
-                />
+              <div className="flex flex-col px-4">
+                <span className=" font-bold text-indigo-200 text-3xl">
+                  LES EXPERTS
+                </span>
+                <span className="font-semibold text-gray-300 text-xs">
+                  CENTER D'ASSISTANCE SCOLAIRE
+                </span>
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1">
@@ -137,12 +134,13 @@ export function GlobalLayout({ children }) {
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-4">
-              <img
-                className="h-8 w-auto rounded-full"
-                src={Logo.src}
-                alt="Les Experts"
-              />
+            <div className="flex flex-col flex-shrink-0 pb-4 px-4">
+              <span className=" font-bold text-gray-200 text-3xl">
+                LES EXPERTS
+              </span>
+              <span className="font-semibold text-indigo-300 text-xs">
+                CENTER D'ASSISTANCE SCOLAIRE
+              </span>
             </div>
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 space-y-1">
@@ -264,7 +262,7 @@ export function GlobalLayout({ children }) {
               </h1>
             </div> */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {children}
+              {status === "authenticated" ? children : "loading..."}
             </div>
           </div>
         </main>

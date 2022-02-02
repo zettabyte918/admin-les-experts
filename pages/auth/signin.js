@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { Transition } from "@headlessui/react";
 import Logo from "../../public/logo.png";
+import Head from "next/head";
 
 export default function Signin() {
   // const [identifier, setIdentifier] = useState(null);
@@ -14,11 +15,14 @@ export default function Signin() {
     signIn("strapi-local", {
       identifier: identifier.current.value,
       password: password.current.value,
-      callbackUrl: "http://localhost:3000",
+      callbackUrl: process.env.NEXT_PUBLIC_ADMIN_PUBLIC_URL,
     });
   };
   return (
     <>
+      <Head>
+        <title>connectez-vous || LES EXPERTS</title>
+      </Head>
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -95,17 +99,8 @@ export default function Signin() {
                   htmlFor="remember-me"
                   className="ml-2 block text-sm text-gray-900"
                 >
-                  Remember me
+                  Mémoriser moi
                 </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
               </div>
             </div>
 
@@ -121,7 +116,7 @@ export default function Signin() {
                     aria-hidden="true"
                   />
                 </span>
-                Sign in
+                se connecter
               </button>
             </div>
           </form>

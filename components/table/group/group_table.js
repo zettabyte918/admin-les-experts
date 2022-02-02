@@ -6,6 +6,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import { EmptyStateGroups } from "./emptyStateGroups";
 import { GlobalFilter } from "./filter";
 import { TableFooter } from "./tableFooter";
+import { ListStudents } from "../../slides/list";
 
 export function TableGroup({ datas }) {
   const columns = useMemo(() => COLUMNS, []);
@@ -40,6 +41,7 @@ export function TableGroup({ datas }) {
 
   return (
     <>
+      <ListStudents />
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
         <div className="flex justify-end  md:flex-1 w-full mb-2 md:mb-0">

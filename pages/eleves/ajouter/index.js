@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useApi } from "../../../axios";
 import { Packs, Divisions } from "../../../components/eleves/ajouter";
 import { HeaderText } from "../../../components/layout";
+import { Groupes } from "../../../components/eleves/ajouter/groupes";
 
 const AjouterEleve = () => {
   const { addStudent } = useApi();
 
-  const [packs, setPack] = useState([]);
-  const [selected, setSelected] = useState();
+  const [selectedPack, setSelectedPack] = useState();
+  const [selectedGroup, setSelectedGroup] = useState();
 
   const [inputValues, setInputValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -20,7 +21,6 @@ const AjouterEleve = () => {
     const { name, value } = event.target;
     setInputValues({ [name]: value });
   };
-
   return (
     <>
       <Head>
@@ -230,17 +230,28 @@ const AjouterEleve = () => {
                       </div>
                     </div>
 
-                    <div className="col-span-6">
+                    <div className="col-span-6 sm:col-span-3">
                       <div>
                         <label className="block text-sm font-medium text-gray-700">
                           Pack
                         </label>
                         <div className="mt-1">
                           <Packs
-                            packs={packs}
-                            setPack={setPack}
-                            selected={selected}
-                            setSelected={setSelected}
+                            selected={selectedPack}
+                            setSelected={setSelectedPack}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          Groupe
+                        </label>
+                        <div className="mt-1">
+                          <Groupes
+                            selected={selectedGroup}
+                            setSelected={setSelectedGroup}
                           />
                         </div>
                       </div>
@@ -268,7 +279,8 @@ const AjouterEleve = () => {
                   <button
                     type="button"
                     onClick={() => {
-                      addStudent(selected, inputValues);
+                      addStudent(selectedPack, selectedGroup, inputValues);
+                      setInputValues({});
                     }}
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >

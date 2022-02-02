@@ -18,6 +18,9 @@ function Eleves() {
       }
       fetchData();
     }
+    return () => {
+      setStudents([]);
+    };
   }, [session]);
   return (
     <>

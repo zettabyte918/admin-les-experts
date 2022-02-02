@@ -4,6 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { GlobalLayout } from "../components/layout";
 import { NotificationProvider, Notification } from "../components/Notification";
 import { ApiContext } from "../axios";
+import { ListStudentsProvider } from "../components/slides/list";
 const layouts = {
   GlobalLayout,
 };
@@ -16,7 +17,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <Notification />
         <ApiContext>
           <Layout>
-            <Component {...pageProps} />
+            <ListStudentsProvider>
+              <Component {...pageProps} />
+            </ListStudentsProvider>
           </Layout>
         </ApiContext>
       </NotificationProvider>
