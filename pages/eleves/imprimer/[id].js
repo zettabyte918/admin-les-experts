@@ -4,6 +4,7 @@ import { useApi } from "../../../axios";
 import { useSession } from "next-auth/react";
 import Logo from "../../../public/logo2.png";
 import { PrinterIcon } from "@heroicons/react/solid";
+import Head from "next/head";
 
 const Imprimer = () => {
   const router = useRouter();
@@ -35,6 +36,9 @@ const Imprimer = () => {
 
   return studentData ? (
     <>
+      <Head>
+        <title>{studentData?.name_eleve} || LES EXPERTS</title>
+      </Head>
       <div className="flex py-2 justify-center space-x-2 items-center">
         <img width={100} src={Logo.src}></img>
         <div className="text-center">
