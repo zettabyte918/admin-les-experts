@@ -41,6 +41,10 @@ export function GlobalLayout({ children }) {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  });
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -136,14 +140,11 @@ export function GlobalLayout({ children }) {
             <div className="flex flex-col flex-shrink-0 pb-4 px-4">
               <Transition
                 appear={true}
-                show={true}
+                show={ready}
                 as={Fragment}
                 enter="transform ease-out duration-500 transition"
                 enterFrom="-translate-x-4 opacity-0"
                 enterTo="-translate-x-0 opacity-100"
-                leave="transition ease-in duration-200"
-                leaveFrom="translate-x-0 opacity-100"
-                leaveTo="translate-x-2 opacity-0"
               >
                 <span className=" font-bold text-gray-200 text-3xl">
                   LES EXPERTS
@@ -152,14 +153,11 @@ export function GlobalLayout({ children }) {
 
               <Transition
                 appear={true}
-                show={true}
+                show={ready}
                 as={Fragment}
                 enter="transform ease-out duration-500 transition"
                 enterFrom="-translate-y-2 opacity-0"
                 enterTo="translate-y-0 opacity-100"
-                leave="transition ease-in duration-200"
-                leaveFrom="translate-x-0 opacity-100"
-                leaveTo="translate-x-2 opacity-0"
               >
                 <span className="font-semibold text-indigo-300 text-xs">
                   CENTER D&apos;ASSISTANCE SCOLAIRE
@@ -169,14 +167,11 @@ export function GlobalLayout({ children }) {
             <div className="mt-5 flex-1 flex flex-col">
               <Transition
                 appear={true}
-                show={true}
+                show={ready}
                 as={Fragment}
                 enter="transform ease-out duration-500 transition"
                 enterFrom="-translate-y-2 opacity-0"
                 enterTo="translate-y-0 opacity-100"
-                leave="transition ease-in duration-200"
-                leaveFrom="translate-x-0 opacity-100"
-                leaveTo="translate-x-2 opacity-0"
               >
                 <nav className="flex-1 px-2 space-y-1">
                   {navigation?.map((item, id) => (
