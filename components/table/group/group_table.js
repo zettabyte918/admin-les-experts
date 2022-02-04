@@ -7,7 +7,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import { EmptyStateGroups } from "./emptyStateGroups";
 import { GlobalFilter } from "./filter";
 import { TableFooter } from "./tableFooter";
-import { ListStudents } from "../../slides/list";
+import { ListStudents, ListStudentsProvider } from "../../slides/list";
 
 export function TableGroup({ datas }) {
   const columns = useMemo(() => COLUMNS, []);
@@ -48,7 +48,6 @@ export function TableGroup({ datas }) {
   }, []);
   return (
     <>
-      <ListStudents />
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
         <Transition
           show={open}
@@ -127,24 +126,27 @@ export function TableGroup({ datas }) {
                   >
                     {pageCount ? (
                       <>
-                        {page.map((row, id) => {
-                          prepareRow(row);
-                          return (
-                            <tr key={id} {...row.getRowProps()}>
-                              {row.cells.map((cell, id) => {
-                                return (
-                                  <td
-                                    key={id}
-                                    className="px-6 py-4 whitespace-nowrap text-sm font-medium"
-                                    {...cell.getCellProps()}
-                                  >
-                                    {cell.render("Cell")}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        })}
+                        <ListStudentsProvider>
+                          <ListStudents />
+                          {page.map((row, id) => {
+                            prepareRow(row);
+                            return (
+                              <tr key={id} {...row.getRowProps()}>
+                                {row.cells.map((cell, id) => {
+                                  return (
+                                    <td
+                                      key={id}
+                                      className="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                                      {...cell.getCellProps()}
+                                    >
+                                      {cell.render("Cell")}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </ListStudentsProvider>
                         <tr>
                           <td colSpan={5}>
                             <TableFooter
