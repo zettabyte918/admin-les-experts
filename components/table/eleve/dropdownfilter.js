@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { useAsyncDebounce } from "react-table";
 import { CheckIcon, SelectorIcon, XIcon } from "@heroicons/react/solid";
@@ -9,8 +9,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DropDownFilter({ filter, setFilter }) {
-  const [selected, setSelected] = useState(divisions[0]);
+export default function DropDownFilter({ setFilter }) {
+  const divs = useMemo(() => divisions, []);
+
+  const [selected, setSelected] = useState(divs[0]);
+
   const onChanges = useAsyncDebounce((value) => {
     setSelected(value);
     if (value.id === 100) return setFilter(undefined);
@@ -41,7 +44,7 @@ export default function DropDownFilter({ filter, setFilter }) {
                 leaveTo="opacity-0"
               >
                 <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                  {divisions.map((person) => (
+                  {divs.map((person) => (
                     <Listbox.Option
                       key={person.id}
                       className={({ active }) =>

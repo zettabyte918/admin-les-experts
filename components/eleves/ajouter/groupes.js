@@ -3,21 +3,6 @@ import { useSession } from "next-auth/react";
 import { RadioGroup } from "@headlessui/react";
 import { useApi } from "../../../axios";
 
-const settings = [
-  {
-    name: "Public access",
-    description: "This project would be available to anyone who has the link",
-  },
-  {
-    name: "Private to Project Members",
-    description: "Only members of this project would be able to access",
-  },
-  {
-    name: "Private to you",
-    description: "You are the only one able to access this project",
-  },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -31,7 +16,7 @@ const Groupes = ({ selected, setSelected }) => {
     const gp = await getAllGroups();
     setGroupes(gp?.data);
   };
-  console.log(groupes);
+
   useEffect(async () => {
     if (session?.accessToken) {
       await fetchGroupes();
@@ -44,11 +29,11 @@ const Groupes = ({ selected, setSelected }) => {
           {groupes?.map((groupe, id) => (
             <RadioGroup.Option
               key={id}
-              value={groupe}
+              value={groupe.id}
               className={({ checked }) =>
                 classNames(
                   id === 0 ? "rounded-tl-md rounded-tr-md" : "",
-                  id === settings.length - 1
+                  id === groupes.length - 1
                     ? "rounded-bl-md rounded-br-md"
                     : "",
                   checked

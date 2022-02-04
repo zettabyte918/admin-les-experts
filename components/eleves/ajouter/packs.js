@@ -17,7 +17,6 @@ const Packs = ({ selected, setSelected }) => {
     const pa = await api.get("/packs");
     setPack(pa.data.data);
   };
-
   useEffect(async () => {
     if (session?.accessToken) {
       await fetchPacks();
@@ -30,7 +29,7 @@ const Packs = ({ selected, setSelected }) => {
         {packs?.map((pack, id) => (
           <RadioGroup.Option
             key={id}
-            value={pack}
+            value={pack.id}
             className={({ checked }) =>
               classNames(
                 id === 0 ? "rounded-tl-md rounded-tr-md" : "",

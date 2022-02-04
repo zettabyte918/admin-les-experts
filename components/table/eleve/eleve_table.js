@@ -63,7 +63,7 @@ export function TableEleve({ datas }) {
         >
           <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-2">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-            <DropDownFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            <DropDownFilter setFilter={setGlobalFilter} />
           </div>
         </Transition>
         <Transition

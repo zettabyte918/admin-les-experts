@@ -62,12 +62,21 @@ export const ApiContext = ({ children }) => {
       pack: selectedPack.id,
       group: selectedGroup.id,
     };
-    await api.post("/experts-users", JSON.stringify(user));
-    return addNotification(
-      "SUCCESS",
-      "Succès",
-      `${user.first_name_student} ajouté avec succès`
+    const response = await api.post("/experts-users", JSON.stringify(user));
+    if (response.status === 200) {
+      addNotification(
+        "SUCCESS",
+        "Succès",
+        `${user.first_name_student} ajouté avec succès`
+      );
+      return router.push("/eleves");
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
     );
+    return router.push("/eleves?error=invalide_id_ajout");
   };
 
   const getAllStudents = async () => {
@@ -82,6 +91,41 @@ export const ApiContext = ({ children }) => {
       "merci de rafraichir cette page"
     );
     return router.push("/eleves");
+  };
+
+  const updateStudentById = async (user) => {
+    if (!user?.pack)
+      return addNotification(
+        "DANGER",
+        "Mauvais format",
+        `le champ du <b>pack</b> est obligatoire`
+      );
+    if (!user?.groupe)
+      return addNotification(
+        "DANGER",
+        "Mauvais format",
+        `le champ du <b>group</b> est obligatoire`
+      );
+
+    if (user?.id) {
+      const response = await api.put(
+        `/experts-users/${user.id}`,
+        JSON.stringify(user)
+      );
+      if (response.status === 200)
+        addNotification(
+          "SUCCESS",
+          "Succès",
+          `mise à jour de <b>${response.data.name_eleve}</b> est réussie`
+        );
+      return router.push("/eleves");
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/eleves?error=invalide_id_update");
   };
 
   const countAllStudents = async () => {
@@ -120,16 +164,67 @@ export const ApiContext = ({ children }) => {
     return await api.get("/groupes");
   };
 
+  const getGroupById = async (id) => {
+    if (id) return await api.get(`/groupes/${id}`);
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/groupes");
+  };
+
+  const updateGroupById = async (group) => {
+    if (!group?.id) {
+      addNotification(
+        "DANGER",
+        "Une erreur s'est produite",
+        "merci de rafraichir cette page"
+      );
+      return router.push("/eleves?error=invalide_id_update");
+    }
+
+    const data = {
+      data: {
+        ...group,
+      },
+    };
+
+    const response = await api.put(
+      `/groupes/${group.id}`,
+      JSON.stringify(data)
+    );
+
+    if (response.status === 200) {
+      addNotification(
+        "SUCCESS",
+        "Succès",
+        `mise à jour de <b>${response.data.data.attributes.nom}</b> est réussie`
+      );
+      return router.push("/groupes");
+    }
+
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/groupes?error=invalide_id_update");
+  };
+
   return (
     <strapiApi.Provider
       value={{
         api,
         addStudent,
         getAllStudents,
-        getAllGroups,
         getStudentById,
+        updateStudentById,
         countAllStudents,
+        getAllGroups,
         addGroup,
+        getGroupById,
+        updateGroupById,
       }}
     >
       {children}

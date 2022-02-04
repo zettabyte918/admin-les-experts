@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useApi } from "../../axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSession } from "next-auth/react";
 import { HeaderText } from "../../components/layout";
 import { TableGroup } from "../../components/table";
@@ -19,13 +19,18 @@ function Groupes() {
       fetchData();
     }
   }, [session]);
+
+  const TableMemoGroupes = useMemo(
+    () => <TableGroup datas={groups} />,
+    [groups]
+  );
   return (
     <>
       <Head>
         <title>Groupes</title>
       </Head>
       <HeaderText text={"Liste avec tous les groupes"} />
-      <TableGroup datas={groups} />
+      {TableMemoGroupes}
     </>
   );
 }
