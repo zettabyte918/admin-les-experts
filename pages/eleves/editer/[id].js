@@ -104,7 +104,7 @@ const AjouterEleve = () => {
                         htmlFor="name_eleve"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Nom complet de l'élève
+                        Nom complet de l&apos;élève
                       </label>
                       <input
                         onChange={handleOnChange}
