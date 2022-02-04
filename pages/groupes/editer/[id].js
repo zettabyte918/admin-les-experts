@@ -28,10 +28,13 @@ const AjouterGroupes = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (id) {
-      const group = await getGroupById(id);
-      setGroup(group.data.data.attributes);
+      const fetchGroupByid = async () => {
+        const group = await getGroupById(id);
+        setGroup(group.data.data.attributes);
+      };
+      fetchGroupByid();
     }
   }, [id]);
 

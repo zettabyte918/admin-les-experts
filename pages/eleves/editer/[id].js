@@ -39,19 +39,23 @@ const AjouterEleve = () => {
   const updateStudent = async () => {
     return updateStudentById({
       id,
+      groupe: selectedGroup,
+      pack: selectedPack,
       ...inputValues,
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     if (id) {
-      const student = await getStudentById(id);
-      setStudent(student);
-      setSelectedPack(student.data.pack.id);
-      setSelectedGroup(student.data.groupe.id);
+      const updateStudent = async () => {
+        const student = await getStudentById(id);
+        setStudent(student);
+        setSelectedPack(student.data.pack.id);
+        setSelectedGroup(student.data.groupe.id);
+      };
+      updateStudent();
     }
   }, [id]);
-  console.log({ groupe: selectedGroup, pack: selectedPack, ...inputValues });
   return (
     <>
       <Head>
@@ -92,7 +96,7 @@ const AjouterEleve = () => {
                       <input
                         onChange={handleOnChange}
                         type="text"
-                        defaultValue={student?.data.name_parent || ""}
+                        defaultValue={student?.data?.name_parent || ""}
                         name="name_parent"
                         id="name_parent"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -108,7 +112,7 @@ const AjouterEleve = () => {
                       </label>
                       <input
                         onChange={handleOnChange}
-                        defaultValue={student?.data.name_eleve || ""}
+                        defaultValue={student?.data?.name_eleve || ""}
                         type="text"
                         name="name_eleve"
                         id="name_eleve"
@@ -127,7 +131,7 @@ const AjouterEleve = () => {
                         <div className="mt-1">
                           <textarea
                             onChange={handleOnChange}
-                            defaultValue={student?.data.subjects || ""}
+                            defaultValue={student?.data?.subjects || ""}
                             id="subjects"
                             name="subjects"
                             rows={3}
@@ -149,7 +153,7 @@ const AjouterEleve = () => {
                       </label>
                       <input
                         onChange={handleOnChange}
-                        defaultValue={student?.data.email || ""}
+                        defaultValue={student?.data?.email || ""}
                         type="text"
                         name="email"
                         id="email"
@@ -167,7 +171,7 @@ const AjouterEleve = () => {
                       </label>
                       <input
                         onChange={handleOnChange}
-                        defaultValue={student?.data.tel || ""}
+                        defaultValue={student?.data?.tel || ""}
                         type="number"
                         name="tel"
                         id="tel"
@@ -183,7 +187,7 @@ const AjouterEleve = () => {
                         Niveau
                       </label>
                       <Divisions
-                        selectedDivision={student?.data.niveau || ""}
+                        selectedDivision={student?.data?.niveau || ""}
                         handleOnChange={handleOnChange}
                       />
                     </div>
@@ -199,7 +203,7 @@ const AjouterEleve = () => {
                         <div className="mt-1">
                           <textarea
                             onChange={handleOnChange}
-                            defaultValue={student?.data.remarque_parents || ""}
+                            defaultValue={student?.data?.remarque_parents || ""}
                             id="remarque_parents"
                             name="remarque_parents"
                             rows={3}
@@ -224,7 +228,7 @@ const AjouterEleve = () => {
                         <div className="mt-1">
                           <textarea
                             onChange={handleOnChange}
-                            defaultValue={student?.data.remarque_center || ""}
+                            defaultValue={student?.data?.remarque_center || ""}
                             id="remarque_center"
                             name="remarque_center"
                             rows={3}

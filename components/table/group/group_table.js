@@ -40,12 +40,14 @@ export function TableGroup({ datas }) {
     usePagination
   );
   const { globalFilter, pageIndex, pageSize } = state;
+
   useEffect(() => {
     setOpen(true);
     return () => {
       setOpen(false);
     };
   }, []);
+
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { CheckIcon, ThumbUpIcon, UserIcon } from "@heroicons/react/solid";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { useList } from "./context";
-import { useEffect } from "react/cjs/react.development";
 
 function ListStudents() {
   const { students = [], open, setOpen } = useList();
@@ -102,12 +101,12 @@ function ListStudents() {
                                         <span className="text-gray-400 text-xs">
                                           {id + 1}.
                                         </span>
-                                        {student.name_eleve}
+                                        {student?.name_eleve}
                                       </p>
                                     </div>
                                     <div className="text-right text-sm whitespace-nowrap text-gray-500">
                                       <span className="inline-flex flex-shrink-0  items-center px-2.5 mr-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                                        {student.pack.nom}
+                                        {student?.pack?.nom}
                                       </span>
                                     </div>
                                   </div>
