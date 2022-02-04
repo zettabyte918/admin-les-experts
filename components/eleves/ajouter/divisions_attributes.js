@@ -1,5 +1,10 @@
 export const divisions = [
   {
+    id: 100,
+    is_public: true,
+    name: "sélectionner un niveau",
+  },
+  {
     id: 37,
     is_public: true,
     name: "2ème primaire",

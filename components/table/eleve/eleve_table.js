@@ -7,6 +7,7 @@ import { PlusIcon } from "@heroicons/react/solid";
 import { EmptyStateEleves } from "./emptyStateEleves";
 import { GlobalFilter } from "./filter";
 import { TableFooter } from "./tableFooter";
+import DropDownFilter from "./dropdownfilter";
 
 export function TableEleve({ datas }) {
   const columns = useMemo(() => COLUMNS, []);
@@ -60,8 +61,9 @@ export function TableEleve({ datas }) {
           leaveFrom="translate-x-0 opacity-100"
           leaveTo="translate-x-2 opacity-0"
         >
-          <div>
+          <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-2">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            <DropDownFilter filter={globalFilter} setFilter={setGlobalFilter} />
           </div>
         </Transition>
         <Transition
