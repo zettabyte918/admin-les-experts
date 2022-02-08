@@ -29,7 +29,7 @@ export const COLUMNS = [
   },
   {
     Header: "Groupe",
-    accessor: (student) => [student.groupe.nom, student.groupe.description],
+    accessor: (student) => [student?.groupe?.nom, student?.groupe?.description],
     Cell: ({ value }) => {
       const [nom, description] = value;
       return (

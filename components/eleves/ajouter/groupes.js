@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { RadioGroup } from "@headlessui/react";
 import { useApi } from "../../../axios";
@@ -7,7 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Groupes = ({ selected, setSelected }) => {
+const Groupes = memo(({ selected, setSelected }) => {
   const { getAllGroups } = useApi();
   const [groupes, setGroupes] = useState([]);
   const { data: session } = useSession();
@@ -33,7 +33,7 @@ const Groupes = ({ selected, setSelected }) => {
               className={({ checked }) =>
                 classNames(
                   id === 0 ? "rounded-tl-md rounded-tr-md" : "",
-                  id === groupes.length - 1
+                  id === groupes?.length - 1
                     ? "rounded-bl-md rounded-br-md"
                     : "",
                   checked
@@ -69,7 +69,7 @@ const Groupes = ({ selected, setSelected }) => {
                         {groupe.nom}
                       </RadioGroup.Label>
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-                        {groupe.students.length} élèves
+                        {groupe?.students?.length} élèves
                       </span>
                     </div>
                     <RadioGroup.Description
@@ -79,7 +79,7 @@ const Groupes = ({ selected, setSelected }) => {
                         "block text-sm"
                       )}
                     >
-                      {groupe.description}
+                      {groupe?.description}
                     </RadioGroup.Description>
                   </div>
                 </>
@@ -90,6 +90,7 @@ const Groupes = ({ selected, setSelected }) => {
       </RadioGroup>
     </>
   );
-};
+});
 
+Groupes.displayName = "Groupes";
 export { Groupes };

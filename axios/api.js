@@ -59,17 +59,18 @@ export const ApiContext = ({ children }) => {
       );
     const user = {
       ...inputValues,
-      pack: selectedPack.id,
-      group: selectedGroup.id,
+      pack: selectedPack,
+      group: selectedGroup,
     };
     const response = await api.post("/experts-users", JSON.stringify(user));
     if (response.status === 200) {
+      console.log(response.data.id);
       addNotification(
         "SUCCESS",
         "Succès",
-        `${user.first_name_student} ajouté avec succès`
+        `<b>${user.first_name_student}</b> ajouté avec succès`
       );
-      return router.push("/eleves");
+      return router.push(`/eleves/imprimer/${response.data.id}`);
     }
     addNotification(
       "DANGER",
@@ -153,11 +154,8 @@ export const ApiContext = ({ children }) => {
     };
 
     await api.post("/groupes", JSON.stringify(data));
-    return addNotification(
-      "SUCCESS",
-      "Succès",
-      `<b>${data.data.nom}</b> a été créé`
-    );
+    addNotification("SUCCESS", "Succès", `<b>${data.data.nom}</b> a été créé`);
+    return router.push("/groupes?groupeAdded=true");
   };
 
   const getAllGroups = async () => {

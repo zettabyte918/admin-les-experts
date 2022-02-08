@@ -17,16 +17,6 @@ const AjouterEleve = () => {
   const [selectedPack, setSelectedPack] = useState();
   const [selectedGroup, setSelectedGroup] = useState();
 
-  const packs = useMemo(
-    () => <Packs selected={selectedPack} setSelected={setSelectedPack} />,
-    [selectedPack]
-  );
-
-  const groupes = useMemo(
-    () => <Groupes selected={selectedGroup} setSelected={setSelectedGroup} />,
-    [selectedGroup]
-  );
-
   const [inputValues, setInputValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {}
@@ -83,7 +73,7 @@ const AjouterEleve = () => {
         <div className="md:grid md:grid-cols-2 md:gap-6">
           <div className=" md:mt-0 md:col-span-2">
             <form action="#" method="POST">
-              <div className="shadow overflow-hidden sm:rounded-md">
+              <div className="shadow overflow-hidden rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
@@ -247,7 +237,12 @@ const AjouterEleve = () => {
                         <label className="block text-sm font-medium text-gray-700">
                           Pack
                         </label>
-                        <div className="mt-1">{packs}</div>
+                        <div className="mt-1">
+                          <Packs
+                            selected={selectedPack}
+                            setSelected={setSelectedPack}
+                          />
+                        </div>
                       </div>
                     </div>
                     <div className="col-span-6 sm:col-span-3">
@@ -255,7 +250,12 @@ const AjouterEleve = () => {
                         <label className="block text-sm font-medium text-gray-700">
                           Groupe
                         </label>
-                        <div className="mt-1">{groupes}</div>
+                        <div className="mt-1">
+                          <Groupes
+                            selected={selectedGroup}
+                            setSelected={setSelectedGroup}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

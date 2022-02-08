@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useApi } from "../../../axios";
 import { RadioGroup } from "@headlessui/react";
@@ -7,9 +7,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Packs = ({ selected, setSelected }) => {
+const Packs = memo(({ selected, setSelected }) => {
   const [packs, setPack] = useState([]);
-
   const { data: session } = useSession();
   const { api } = useApi();
 
@@ -33,7 +32,7 @@ const Packs = ({ selected, setSelected }) => {
             className={({ checked }) =>
               classNames(
                 id === 0 ? "rounded-tl-md rounded-tr-md" : "",
-                id === packs.length - 1 ? "rounded-bl-md rounded-br-md" : "",
+                id === packs?.length - 1 ? "rounded-bl-md rounded-br-md" : "",
                 checked
                   ? "bg-indigo-50 border-indigo-200 z-10"
                   : "border-gray-200",
@@ -63,7 +62,7 @@ const Packs = ({ selected, setSelected }) => {
                       "block text-sm font-medium"
                     )}
                   >
-                    {pack.attributes.nom}
+                    {pack?.attributes?.nom}
                   </RadioGroup.Label>
                   <RadioGroup.Description
                     as="span"
@@ -73,7 +72,7 @@ const Packs = ({ selected, setSelected }) => {
                     )}
                   >
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-                      {pack.attributes.description}
+                      {pack?.attributes?.description}
                     </span>
                   </RadioGroup.Description>
                 </div>
@@ -84,6 +83,7 @@ const Packs = ({ selected, setSelected }) => {
       </div>
     </RadioGroup>
   );
-};
+});
 
+Packs.displayName = "Packs";
 export { Packs };

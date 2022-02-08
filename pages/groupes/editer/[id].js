@@ -64,7 +64,7 @@ const AjouterGroupes = () => {
         <div className="md:grid md:grid-cols-2 md:gap-6">
           <div className=" md:mt-0 md:col-span-2">
             <form action="#" method="POST">
-              <div className="shadow overflow-hidden sm:rounded-md">
+              <div className="shadow overflow-hidden rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">

@@ -18,7 +18,7 @@ function classNames(...classes) {
 }
 
 export function GlobalLayout({ children }) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
   const { pathname } = router;
 

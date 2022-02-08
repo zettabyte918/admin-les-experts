@@ -21,6 +21,11 @@ const AjouterEleve = () => {
     const { name, value } = event.target;
     setInputValues({ [name]: value });
   };
+
+  const createStudent = async () => {
+    await addStudent(selectedPack, selectedGroup, inputValues);
+  };
+
   return (
     <>
       <Head>
@@ -47,7 +52,7 @@ const AjouterEleve = () => {
         <div className="md:grid md:grid-cols-2 md:gap-6">
           <div className=" md:mt-0 md:col-span-2">
             <form action="#" method="POST">
-              <div className="shadow overflow-hidden sm:rounded-md">
+              <div className="shadow overflow-hidden rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
@@ -278,10 +283,7 @@ const AjouterEleve = () => {
                 <div className="px-4 py-3 bg-gray-200 text-right sm:px-6">
                   <button
                     type="button"
-                    onClick={() => {
-                      addStudent(selectedPack, selectedGroup, inputValues);
-                      setInputValues({});
-                    }}
+                    onClick={createStudent}
                     className="inline-flex w-full md:w-fit justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Ajouter cet élève
