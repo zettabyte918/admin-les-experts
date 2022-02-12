@@ -1,15 +1,18 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState, useReducer, useMemo, useEffect } from "react";
-import { ArrowLeftIcon, PrinterIcon } from "@heroicons/react/solid";
+import { useState, useReducer, useEffect } from "react";
+import { ArrowLeftIcon, PrinterIcon, XIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useApi } from "../../../axios";
 import { Packs, Divisions } from "../../../components/eleves/ajouter";
 import { HeaderText } from "../../../components/layout";
 import { Groupes } from "../../../components/eleves/ajouter/groupes";
+import { DesactivaterEleveModal } from "../../../components/eleves/editer/modals";
 
 const AjouterEleve = () => {
-  const { getStudentById, updateStudentById } = useApi();
+  const [openDsactivateModal, setOpenDsactivateModal] = useState(false);
+
+  const { getStudentById, updateStudentById, deactivateStudentById } = useApi();
   const router = useRouter();
   const { id } = router.query;
 
@@ -40,11 +43,17 @@ const AjouterEleve = () => {
       const updateStudent = async () => {
         const student = await getStudentById(id);
         setStudent(student);
-        setSelectedPack(student.data.pack.id);
-        setSelectedGroup(student.data.groupe.id);
+        setSelectedPack(student?.data?.pack?.id);
+        setSelectedGroup(student?.data?.groupe?.id);
       };
       updateStudent();
     }
+    return () => {
+      setInputValues({});
+      setStudent({});
+      setSelectedPack({});
+      setSelectedGroup({});
+    };
   }, [id]);
   return (
     <>
@@ -52,22 +61,42 @@ const AjouterEleve = () => {
         <title>Ajouter un élève</title>
       </Head>
       <HeaderText text={"Modifier cet élève"} />
+      <DesactivaterEleveModal
+        id={id}
+        open={openDsactivateModal}
+        setOpen={setOpenDsactivateModal}
+      />
       <div className="flex py-2 justify-between">
-        <Link href="/eleves">
-          <a
-            type="button"
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        <div className="space-x-2">
+          <Link href="/eleves">
+            <a
+              type="button"
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            >
+              <ArrowLeftIcon
+                className="-ml-1 mr-2 h-5 w-5"
+                aria-hidden="true"
+              />
+              Retour
+            </a>
+          </Link>
+        </div>
+        <div className="space-x-2">
+          <button
+            onClick={() => setOpenDsactivateModal(true)}
+            className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
-            <ArrowLeftIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-            Retour
-          </a>
-        </Link>
-        <Link href={`/eleves/imprimer/${id}`}>
-          <a className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Imprimer
-            <PrinterIcon className="ml-1 h-5 w-5" aria-hidden="true" />
-          </a>
-        </Link>
+            Désactiver
+            <XIcon className="ml-1 h-5 w-5" aria-hidden="true" />
+          </button>
+
+          <Link href={`/eleves/imprimer/${id}`}>
+            <a className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Imprimer
+              <PrinterIcon className="ml-1 h-5 w-5" aria-hidden="true" />
+            </a>
+          </Link>
+        </div>
       </div>
       <div className=" relative flex-1 ">
         <div className="md:grid md:grid-cols-2 md:gap-6">

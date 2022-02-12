@@ -34,7 +34,7 @@ export function TableGroup({ datas }) {
     {
       columns,
       data,
-      initialState: { pageSize: 3, pageIndex: 0 },
+      initialState: { pageSize: 5, pageIndex: 0 },
     },
     useGlobalFilter,
     usePagination

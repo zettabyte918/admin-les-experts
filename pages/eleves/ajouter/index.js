@@ -6,12 +6,21 @@ import { useApi } from "../../../axios";
 import { Packs, Divisions } from "../../../components/eleves/ajouter";
 import { HeaderText } from "../../../components/layout";
 import { Groupes } from "../../../components/eleves/ajouter/groupes";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const AjouterEleve = () => {
   const { addStudent } = useApi();
 
   const [selectedPack, setSelectedPack] = useState();
   const [selectedGroup, setSelectedGroup] = useState();
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [startDate, endDate] = dateRange;
+  console.log(dateRange);
 
   const [inputValues, setInputValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -23,7 +32,7 @@ const AjouterEleve = () => {
   };
 
   const createStudent = async () => {
-    await addStudent(selectedPack, selectedGroup, inputValues);
+    await addStudent(selectedPack, selectedGroup, inputValues, dateRange);
   };
 
   return (
@@ -258,6 +267,43 @@ const AjouterEleve = () => {
                             selected={selectedGroup}
                             setSelected={setSelectedGroup}
                           />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-span-6">
+                      <div className="flex justify-between items-center border-4 border-dashed border-gray-200 rounded-lg p-2">
+                        <div>
+                          <label className="block text-sm font-medium text-red-700 mb-1">
+                            Date de payment:
+                          </label>
+                          <DatePicker
+                            selectsRange={true}
+                            startDate={startDate}
+                            endDate={endDate}
+                            onChange={(update) => {
+                              setDateRange(update);
+                            }}
+                            withPortal
+                          />
+                          <p className="mt-2 text-sm text-red-500">
+                            Remplir si le paiement est effectué et validé.
+                          </p>
+                        </div>
+                        <div className="px-4 py-3 text-right sm:px-6">
+                          <button
+                            type="button"
+                            disabled={!dateRange[0] || !dateRange[0]}
+                            onClick={() => setDateRange([null, null])}
+                            className={classNames(
+                              dateRange[0] || dateRange[0]
+                                ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
+                                : "bg-gray-200 focus:ring-gray-300",
+                              "inline-flex w-full md:w-fit justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2"
+                            )}
+                          >
+                            Réinitialiser cette date
+                          </button>
                         </div>
                       </div>
                     </div>

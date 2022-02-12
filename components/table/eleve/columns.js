@@ -63,7 +63,7 @@ export const COLUMNS = [
   // },
   {
     Header: "Pack",
-    accessor: (student) => [student.pack.nom, student.pack.description],
+    accessor: (student) => [student?.pack?.nom, student?.pack?.description],
     Cell: ({ value }) => {
       const [nom, description] = value;
 

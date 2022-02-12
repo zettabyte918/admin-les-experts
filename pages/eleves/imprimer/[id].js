@@ -5,7 +5,11 @@ import { useApi } from "../../../axios";
 import { useSession } from "next-auth/react";
 import Logo from "../../../public/logo2.png";
 import { Transition } from "@headlessui/react";
-import { PrinterIcon, ArrowLeftIcon } from "@heroicons/react/solid";
+import {
+  PrinterIcon,
+  ArrowLeftIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/solid";
 import Head from "next/head";
 
 const people = [
@@ -72,7 +76,7 @@ const Imprimer = () => {
       >
         <div className="print:hidden fixed top-3 space-x-2 left-0 flex justify-end px-10 shadow-sm">
           <div className="">
-            <Link href="/eleves">
+            <Link href={`/eleves/editer/${studentData?.id}`}>
               <a
                 type="button"
                 className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
@@ -281,68 +285,27 @@ const Imprimer = () => {
             {studentData?.groupe?.description}
           </p>
         </div>
-        <div className="col-span-6">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-400">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    1
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    2
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    3
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    4
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    5
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {people.map((person, personIdx) => (
-                  <tr
-                    key={person.email}
-                    className={personIdx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {person.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.title}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.role}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.email2}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      </div>
+      {/* Payment table */}
+      <div className="px-10 pt-5">
+        <label className="block text-sm font-medium text-gray-700">
+          Dates de paiement
+        </label>
+        <div className="mt-2 grid grid-cols-6 gap-6">
+          {studentData?.payments?.map((payment) => (
+            <div className="col-span-1 space-y-1 flex-row">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                {payment.debut}
+              </span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                {payment.fin}
+              </span>
+            </div>
+          ))}
+          <div className="col-span-6">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800">
+              Aucun paiement effectué pour cet étudiant
+            </span>
           </div>
         </div>
       </div>

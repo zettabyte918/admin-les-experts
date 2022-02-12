@@ -43,7 +43,12 @@ export const ApiContext = ({ children }) => {
     }
   );
 
-  const addStudent = async (selectedPack, selectedGroup, inputValues) => {
+  const addStudent = async (
+    selectedPack,
+    selectedGroup,
+    inputValues,
+    dateRange
+  ) => {
     if (!selectedPack)
       return addNotification(
         "DANGER",
@@ -57,10 +62,12 @@ export const ApiContext = ({ children }) => {
         "Pack introuvable",
         "veuillez sélectionner un <b>groupe</b> valide"
       );
+
     const user = {
       ...inputValues,
       pack: selectedPack,
       group: selectedGroup,
+      dateRange,
     };
     const response = await api.post("/experts-users", JSON.stringify(user));
     if (response.status === 200) {
@@ -92,6 +99,28 @@ export const ApiContext = ({ children }) => {
       "merci de rafraichir cette page"
     );
     return router.push("/eleves");
+  };
+
+  const deactivateStudentById = async (id) => {
+    if (id) {
+      const response = await api.get(`/experts-users/deactivate/${id}`);
+      const { status } = response;
+      console.log(response);
+      if (status === 200) {
+        addNotification(
+          "SUCCESS",
+          "Succès ",
+          "Élève <b>désactivé</b> avec succès"
+        );
+        return router.push(`/eleves`);
+      }
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push(`/eleves/editer/${id}`);
   };
 
   const updateStudentById = async (user) => {
@@ -217,6 +246,7 @@ export const ApiContext = ({ children }) => {
         addStudent,
         getAllStudents,
         getStudentById,
+        deactivateStudentById,
         updateStudentById,
         countAllStudents,
         getAllGroups,

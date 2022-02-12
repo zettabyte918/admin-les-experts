@@ -1,5 +1,4 @@
 import { memo, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { RadioGroup } from "@headlessui/react";
 import { useApi } from "../../../axios";
 
@@ -10,7 +9,6 @@ function classNames(...classes) {
 const Groupes = memo(({ selected, setSelected }) => {
   const { getAllGroups } = useApi();
   const [groupes, setGroupes] = useState([]);
-  const { data: session } = useSession();
 
   const fetchGroupes = async () => {
     const gp = await getAllGroups();
@@ -18,10 +16,8 @@ const Groupes = memo(({ selected, setSelected }) => {
   };
 
   useEffect(async () => {
-    if (session?.accessToken) {
-      await fetchGroupes();
-    }
-  }, [session]);
+    await fetchGroupes();
+  }, []);
   return (
     <>
       <RadioGroup value={selected} onChange={setSelected}>
