@@ -1,36 +1,38 @@
 import Head from "next/head";
 import { useApi } from "../../axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { HeaderText } from "../../components/layout";
 import { TableGroup } from "../../components/table";
+import { EmptyGroupTable } from "../../components/groupes";
 
 function Groupes() {
   const [groups, setGroups] = useState([]);
+  const [readyData, setReadyData] = useState(false);
   const { getAllGroups } = useApi();
-  const { data: session } = useSession();
+  const { session } = useSession();
 
-  useEffect(() => {
-    if (session?.accessToken) {
-      async function fetchData() {
-        const Students = await getAllGroups();
-        setGroups(Students.data);
-      }
-      fetchData();
+  useEffect(async () => {
+    const Groups = await getAllGroups();
+    if (Groups.data.length !== 0) {
+      setGroups(Groups.data);
     }
+    setReadyData(true);
   }, [session]);
 
-  const TableMemoGroupes = useMemo(
-    () => <TableGroup datas={groups} />,
-    [groups]
-  );
+  console.log(groups.length === 0);
   return (
     <>
       <Head>
         <title>Groupes</title>
       </Head>
       <HeaderText text={"Liste avec tous les groupes"} />
-      {TableMemoGroupes}
+      {readyData &&
+        (groups.length === 0 ? (
+          <EmptyGroupTable />
+        ) : (
+          <TableGroup datas={groups} />
+        ))}
     </>
   );
 }

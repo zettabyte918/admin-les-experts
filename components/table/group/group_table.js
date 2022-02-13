@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
-import { useMemo, Fragment, useState, useEffect } from "react";
+import { useMemo, Fragment, useState, useEffect, memo } from "react";
 import { useTable, useGlobalFilter, usePagination } from "react-table";
 import { COLUMNS } from "./columns";
 import { PlusIcon } from "@heroicons/react/solid";
@@ -9,7 +9,7 @@ import { GlobalFilter } from "./filter";
 import { TableFooter } from "./tableFooter";
 import { ListStudents, ListStudentsProvider } from "../../slides/list";
 
-export function TableGroup({ datas }) {
+const TableGroup = memo(({ datas }) => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => datas, [datas]);
   const [open, setOpen] = useState(false);
@@ -52,6 +52,7 @@ export function TableGroup({ datas }) {
     <>
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
         <Transition
+          appear={true}
           show={open}
           as={Fragment}
           enter="transform ease-out duration-500 transition"
@@ -66,6 +67,7 @@ export function TableGroup({ datas }) {
           </div>
         </Transition>
         <Transition
+          appear={true}
           show={open}
           as={Fragment}
           enter="transform ease-out duration-500 transition"
@@ -89,7 +91,8 @@ export function TableGroup({ datas }) {
         </Transition>
       </div>
       <Transition
-        show={open}
+        appear={true}
+        show={!!pageCount}
         as={Fragment}
         enter="transform ease-out duration-500 transition"
         enterFrom="translate-y-2 blur-sm opacity-0"
@@ -179,4 +182,6 @@ export function TableGroup({ datas }) {
       </Transition>
     </>
   );
-}
+});
+TableGroup.displayName = "TableGroup";
+export { TableGroup };

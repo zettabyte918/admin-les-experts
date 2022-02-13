@@ -1,36 +1,37 @@
 import Head from "next/head";
 import { TableEleve } from "../../components/table";
 import { useApi } from "../../axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { HeaderText } from "../../components/layout";
+import { EmptyStudentTable } from "../../components/eleves";
 
 function Eleves() {
   const [students, setStudents] = useState([]);
+  const [readyData, setReadyData] = useState(false);
   const { getAllStudents } = useApi();
-  const { data: session } = useSession();
+  const { session } = useSession();
 
-  useEffect(() => {
-    if (session?.accessToken) {
-      async function fetchData() {
-        const Students = await getAllStudents();
-        setStudents(Students.data);
-      }
-      fetchData();
+  useEffect(async () => {
+    const Students = await getAllStudents();
+    if (Students.data.length !== 0) {
+      setStudents(Students.data);
     }
+    setReadyData(true);
   }, [session]);
 
-  const TableMemoEleves = useMemo(
-    () => <TableEleve datas={students} />,
-    [students]
-  );
   return (
     <>
       <Head>
         <title>Eleves</title>
       </Head>
       <HeaderText text={"Liste avec tous les élèves"} />
-      {TableMemoEleves}
+      {readyData &&
+        (students.length === 0 ? (
+          <EmptyStudentTable />
+        ) : (
+          <TableEleve datas={students} />
+        ))}
     </>
   );
 }

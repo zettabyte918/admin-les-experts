@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Transition } from "@headlessui/react";
-import { useMemo, useEffect, useState, Fragment } from "react";
+import { useMemo, useEffect, useState, Fragment, memo } from "react";
 import { useTable, useGlobalFilter, usePagination } from "react-table";
 import { COLUMNS } from "./columns";
 import { PlusIcon } from "@heroicons/react/solid";
@@ -9,7 +9,7 @@ import { GlobalFilter } from "./filter";
 import { TableFooter } from "./tableFooter";
 import DropDownFilter from "./dropdownfilter";
 
-export function TableEleve({ datas }) {
+const TableEleve = memo(({ datas }) => {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => datas, [datas]);
   const [open, setOpen] = useState(false);
@@ -52,6 +52,7 @@ export function TableEleve({ datas }) {
     <>
       <div className="flex flex-col-reverse md:flex-row py-2 justify-between">
         <Transition
+          appear={true}
           show={open}
           as={Fragment}
           enter="transform ease-out duration-500 transition"
@@ -67,6 +68,7 @@ export function TableEleve({ datas }) {
           </div>
         </Transition>
         <Transition
+          appear={true}
           show={open}
           as={Fragment}
           enter="transform ease-out duration-500 transition"
@@ -90,7 +92,8 @@ export function TableEleve({ datas }) {
         </Transition>
       </div>
       <Transition
-        show={open}
+        appear={true}
+        show={!!pageCount}
         as={Fragment}
         enter="transform ease-out duration-500 transition"
         enterFrom="translate-y-2 blur-sm opacity-0"
@@ -177,4 +180,7 @@ export function TableEleve({ datas }) {
       </Transition>
     </>
   );
-}
+});
+
+TableEleve.displayName = "TableEleve";
+export { TableEleve };
