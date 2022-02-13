@@ -292,21 +292,24 @@ const Imprimer = () => {
           Dates de paiement
         </label>
         <div className="mt-2 grid grid-cols-6 gap-6">
-          {studentData?.payments?.map((payment, id) => (
-            <div key={id} className="col-span-1 space-y-1 flex-row">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
-                {payment.debut}
-              </span>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
-                {payment.fin}
+          {studentData?.payments?.length !== 0 ? (
+            studentData?.payments?.map((payment, id) => (
+              <div key={id} className="col-span-1 space-y-1 flex-row">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                  {payment.debut}
+                </span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                  {payment.fin}
+                </span>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-6">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800">
+                Aucun paiement effectué pour cet étudiant
               </span>
             </div>
-          ))}
-          <div className="col-span-6">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800">
-              Aucun paiement effectué pour cet étudiant
-            </span>
-          </div>
+          )}
         </div>
       </div>
 
