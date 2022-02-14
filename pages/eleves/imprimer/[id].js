@@ -14,16 +14,6 @@ import Head from "next/head";
 import CachetAnwar from "../../../public/les-experts-finger/anwer.png";
 import CachetMontassar from "../../../public/les-experts-finger/montassar.png";
 
-const people = [
-  {
-    name: "1",
-    title: "1",
-    role: "1",
-    email: "1",
-    email2: "1",
-  },
-];
-
 const Imprimer = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(false);
@@ -76,7 +66,7 @@ const Imprimer = () => {
         enterFrom="-translate-y-2 opacity-0"
         enterTo="translate-y-0 opacity-100"
       >
-        <div className="print:hidden fixed top-3 space-x-2 left-0 flex justify-end px-10 shadow-sm">
+        <div className="print:hidden fixed top-3 space-x-2 left-0 flex justify-end px-10">
           <div className="">
             <Link href={`/eleves/editer/${studentData?.id}`}>
               <a
