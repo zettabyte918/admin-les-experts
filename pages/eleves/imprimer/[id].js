@@ -5,11 +5,7 @@ import { useApi } from "../../../axios";
 import { useSession } from "next-auth/react";
 import Logo from "../../../public/logo2.png";
 import { Transition } from "@headlessui/react";
-import {
-  PrinterIcon,
-  ArrowLeftIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/solid";
+import { PrinterIcon, ArrowLeftIcon } from "@heroicons/react/solid";
 import Head from "next/head";
 import CachetAnwar from "../../../public/les-experts-finger/anwer.png";
 import CachetMontassar from "../../../public/les-experts-finger/montassar.png";
