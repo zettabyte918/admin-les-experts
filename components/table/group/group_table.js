@@ -92,7 +92,7 @@ const TableGroup = memo(({ datas }) => {
       </div>
       <Transition
         appear={true}
-        show={!!pageCount}
+        show={!!pageCount || open}
         as={Fragment}
         enter="transform ease-out duration-500 transition"
         enterFrom="translate-y-2 blur-sm opacity-0"
