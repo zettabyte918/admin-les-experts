@@ -11,6 +11,8 @@ import {
   CheckCircleIcon,
 } from "@heroicons/react/solid";
 import Head from "next/head";
+import CachetAnwar from "../../../public/les-experts-finger/anwer.png";
+import CachetMontassar from "../../../public/les-experts-finger/montassar.png";
 
 const people = [
   {
@@ -100,7 +102,6 @@ const Imprimer = () => {
           </button>
         </div>
       </Transition>
-      <div className="print:hidden py-5"></div>
       <div className="px-10 grid grid-cols-6 gap-6">
         <div className="col-span-6 sm:col-span-3">
           <label
@@ -291,14 +292,17 @@ const Imprimer = () => {
         <label className="block text-sm font-medium text-gray-700">
           Dates de paiement
         </label>
-        <div className="mt-2 grid grid-cols-6 gap-6">
+        <div className="mt-2 grid grid-cols-7 gap-x-4 gap-y-2">
           {studentData?.payments?.length !== 0 ? (
-            studentData?.payments?.map((payment, id) => (
-              <div key={id} className="col-span-1 space-y-1 flex-row">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+            studentData?.payments?.slice(-7).map((payment, id) => (
+              <div
+                key={id}
+                className="col-span-1 space-y-1 flex-row flex-shrink-0"
+              >
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
                   {payment.debut}
                 </span>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
                   {payment.fin}
                 </span>
               </div>
@@ -306,14 +310,20 @@ const Imprimer = () => {
           ) : (
             <div className="col-span-6">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-red-100 text-red-800">
-                Aucun paiement effectué pour cet étudiant
+                Aucun paiement effectué pour cet élève.
               </span>
             </div>
           )}
         </div>
       </div>
-
-      <div className="py-5"></div>
+      <div className="px-10 pt-5 grid grid-cols-2 gap-6">
+        <div className="col-span-1">
+          <img width={125} src={CachetMontassar.src}></img>
+        </div>
+        <div className="col-span-1 flex items-center justify-end pr-10">
+          <img width={170} src={CachetAnwar.src}></img>
+        </div>
+      </div>
     </>
   );
 };
