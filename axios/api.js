@@ -212,9 +212,11 @@ export const ApiContext = ({ children }) => {
       },
     };
     console.log(data);
-    const response = await api.post(`/payments`, JSON.stringify(data));
+    const response = await api.post(
+      `/payments/addpayment`,
+      JSON.stringify(data)
+    );
     if (response.status === 200) {
-      await addNotification("SUCCESS", "Succès", `<b>Paiement</b> a été créé`);
       return router.reload(window.location.pathname);
     }
     addNotification(
