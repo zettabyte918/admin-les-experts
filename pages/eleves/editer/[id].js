@@ -1,7 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState, useReducer, useEffect } from "react";
-import { ArrowLeftIcon, PrinterIcon, XIcon } from "@heroicons/react/solid";
+import {
+  ArrowLeftIcon,
+  CashIcon,
+  PrinterIcon,
+  XIcon,
+} from "@heroicons/react/solid";
 import Link from "next/link";
 import { useApi } from "../../../axios";
 import { Packs, Divisions } from "../../../components/eleves/ajouter";
@@ -82,6 +87,12 @@ const AjouterEleve = () => {
           </Link>
         </div>
         <div className="space-x-2">
+          <Link href={`/eleves/editer/${id}/paiement`}>
+            <a className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+              Paiement
+              <CashIcon className="ml-1 h-5 w-5" aria-hidden="true" />
+            </a>
+          </Link>
           <button
             onClick={() => setOpenDsactivateModal(true)}
             className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
@@ -89,7 +100,6 @@ const AjouterEleve = () => {
             Désactiver
             <XIcon className="ml-1 h-5 w-5" aria-hidden="true" />
           </button>
-
           <Link href={`/eleves/imprimer/${id}`}>
             <a className="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               Imprimer

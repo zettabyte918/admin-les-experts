@@ -20,7 +20,6 @@ const AjouterEleve = () => {
   const [selectedGroup, setSelectedGroup] = useState();
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
-  console.log(dateRange);
 
   const [inputValues, setInputValues] = useReducer(
     (state, newState) => ({ ...state, ...newState }),

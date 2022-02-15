@@ -39,7 +39,7 @@ const Imprimer = () => {
     return () => {
       setStudentData(false);
     };
-  }, [session]);
+  }, [session, id]);
 
   return (
     <>

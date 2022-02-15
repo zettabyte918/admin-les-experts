@@ -191,6 +191,39 @@ export const ApiContext = ({ children }) => {
     return await api.get("/groupes");
   };
 
+  const getAllPayments = async (id) => {
+    if (id) return await api.get(`/experts-users/payments/${id}`);
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/eleves");
+  };
+
+  const addPayment = async (startDate, endDate, id) => {
+    if (!startDate || !endDate || !id) return;
+
+    const data = {
+      data: {
+        debut: startDate,
+        fin: endDate,
+        student: id,
+      },
+    };
+    console.log(data);
+    const response = await api.post(`/payments`, JSON.stringify(data));
+    if (response.status === 200) {
+      await addNotification("SUCCESS", "Succès", `<b>Paiement</b> a été créé`);
+      return router.reload(window.location.pathname);
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+  };
+
   const getGroupById = async (id) => {
     if (id) return await api.get(`/groupes/${id}`);
     addNotification(
@@ -243,16 +276,21 @@ export const ApiContext = ({ children }) => {
     <strapiApi.Provider
       value={{
         api,
+        countAllStudents,
         addStudent,
         getAllStudents,
         getStudentById,
+
         deactivateStudentById,
         updateStudentById,
-        countAllStudents,
+
         getAllGroups,
         addGroup,
         getGroupById,
         updateGroupById,
+
+        getAllPayments,
+        addPayment,
       }}
     >
       {children}
