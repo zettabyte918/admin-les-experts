@@ -274,6 +274,32 @@ export const ApiContext = ({ children }) => {
     return router.push("/groupes?error=invalide_id_update");
   };
 
+  const getTokenSMS = async () => {
+    return await api.get("/sms/token");
+  };
+
+  const getBalanceSMS = async (token) => {
+    return await api.get(`/sms/balance/${token}`);
+  };
+
+  const getBalance = async (token) => {
+    var config = {
+      method: "get",
+      url: "https://api.orange.com/sms/admin/v1/contracts",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: "",
+    };
+
+    const response = await axios(config).then(function (response) {
+      return response;
+    });
+
+    return response;
+  };
+
   return (
     <strapiApi.Provider
       value={{
@@ -293,6 +319,9 @@ export const ApiContext = ({ children }) => {
 
         getAllPayments,
         addPayment,
+        getTokenSMS,
+        getBalanceSMS,
+        getBalance,
       }}
     >
       {children}

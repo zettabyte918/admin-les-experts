@@ -9,6 +9,7 @@ import {
   MenuAlt2Icon,
   UsersIcon,
   XIcon,
+  ChatAltIcon,
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
@@ -35,6 +36,12 @@ export function GlobalLayout({ children }) {
       href: "/eleves",
       icon: UsersIcon,
       current: pathname.startsWith("/eleves"),
+    },
+    {
+      name: "Messaging",
+      href: "/sms",
+      icon: ChatAltIcon,
+      current: pathname.startsWith("/sms"),
     },
   ];
   const adminNavigation = [{ name: "se déconnecter", href: "#" }];
