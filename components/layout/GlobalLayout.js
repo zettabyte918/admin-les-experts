@@ -38,7 +38,7 @@ export function GlobalLayout({ children }) {
       current: pathname.startsWith("/eleves"),
     },
     {
-      name: "Messaging",
+      name: "Messagerie",
       href: "/sms",
       icon: ChatAltIcon,
       current: pathname.startsWith("/sms"),
