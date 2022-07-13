@@ -137,38 +137,7 @@ const Imprimer = () => {
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-2 border-gray-300 rounded-md"
           />
         </div>
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="first_name_parents"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="text"
-            name="first_name_parents"
-            id="first_name_parents"
-            defaultValue={studentData?.email}
-            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-2 border-gray-300 rounded-md"
-          />
-        </div>
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="first_name_parents"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Remarque des parents
-          </label>
-          <div className="mt-1">
-            <textarea
-              id="subjects"
-              name="subjects"
-              rows={3}
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-2 border-gray-300 rounded-md"
-              defaultValue={studentData?.remarque_parents}
-            />
-          </div>
-        </div>
+
         <div className="col-span-6 sm:col-span-3">
           <label
             htmlFor="first_name_parents"
@@ -235,42 +204,6 @@ const Imprimer = () => {
               Les matières nécessaire pour ce pack
             </p>
           </div>
-        </div>
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="last_name_parents"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Pack
-          </label>
-          <input
-            type="text"
-            name="last_name_parents"
-            id="last_name_parents"
-            defaultValue={studentData?.pack?.nom}
-            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-2 border-gray-300 rounded-md"
-          />
-          <p className="mt-2 text-sm text-gray-500">
-            {studentData?.pack?.description}
-          </p>
-        </div>
-        <div className="col-span-6 sm:col-span-3">
-          <label
-            htmlFor="last_name_parents"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Groupe
-          </label>
-          <input
-            type="text"
-            name="last_name_parents"
-            id="last_name_parents"
-            defaultValue={studentData?.groupe?.nom}
-            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-2 border-gray-300 rounded-md"
-          />
-          <p className="mt-2 text-sm text-gray-500">
-            {studentData?.groupe?.description}
-          </p>
         </div>
       </div>
       {/* Payment table */}
