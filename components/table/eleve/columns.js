@@ -70,12 +70,13 @@ export const COLUMNS = [
     accessor: (student) => [student?.pack?.nom, student?.pack?.description],
     Cell: ({ value }) => {
       const [nom, description] = value;
+      const [mot1, mot2, mot3] = description.split(" ");
 
       return (
         <>
           <div className="text-sm font-medium text-gray-900">{nom}</div>
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-            {description}
+            {`${mot1} ${mot2} ${mot3 ? "..." : ""}`}
           </span>
         </>
       );
