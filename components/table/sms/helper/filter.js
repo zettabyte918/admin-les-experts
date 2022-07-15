@@ -1,8 +1,11 @@
 const filteredStudentsGloabl = (students, value) => {
-  if (value === "") return students;
+  if (value === "" || !students) return students;
   else {
     let filtredStudentsByName = students.filter((student) => {
       return student.name_eleve.toLowerCase().includes(value.toLowerCase());
+    });
+    let filtredStudentsByNiveau = students.filter((student) => {
+      return student.niveau.toLowerCase().includes(value.toLowerCase());
     });
     let filtredStudentsByGroupe = students.filter((student) => {
       return student.groupe.nom.toLowerCase().includes(value.toLowerCase());
@@ -15,6 +18,7 @@ const filteredStudentsGloabl = (students, value) => {
     });
     let arr = [
       ...filtredStudentsByName,
+      ...filtredStudentsByNiveau,
       ...filtredStudentsByGroupe,
       ...filtredStudentsByPack,
       ...filtredStudentsByTel,
