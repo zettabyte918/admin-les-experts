@@ -2,27 +2,29 @@
 
 import Head from "next/head";
 import { useApi } from "../../axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChatAlt2Icon } from "@heroicons/react/outline";
 import { Filter, TableEleveSMS } from "../../components/table";
+import { filteredStudentsGloabl } from "../../components/table/sms/helper/filter";
+import { useSMSApi, SmsContext } from "../../context/sms";
+import { SmsModal } from "../../components/table/sms/modal";
 
 const SmsPage = () => {
+  // lift state up
+  const {
+    token,
+    setToken,
+    balance,
+    setBalance,
+    canSend,
+    setCanSend,
+    students,
+    setStudents,
+  } = useSMSApi();
+
   const { getTokenSMS, getBalance, getAllStudents } = useApi();
 
   // orange api token
-  const [token, setToken] = useState(null);
-
-  // sms orange api balance (available unit)
-  const [balance, setBalance] = useState(0);
-
-  // sms send button default to true
-  const [canSend, setCanSend] = useState(true);
-
-  // state where al the student with the filtred student
-  const [students, setStudents] = useState({
-    students: [],
-    filtered: [],
-  });
 
   // get token from les-experts backend
   const getToken = async () => {
@@ -33,6 +35,9 @@ const SmsPage = () => {
   useEffect(async () => {
     const response = await getToken();
     setToken(response.data.access_token);
+    return () => {
+      setToken(null);
+    };
   }, []);
 
   //get balance and all student from les-experts backend
@@ -44,26 +49,26 @@ const SmsPage = () => {
       if (response.code === 41) {
         return;
       }
-      setStudents({
-        all: students.data,
-        filtered: students.data,
-      });
+      setStudents(students.data);
       setBalance(response.data.partnerContracts.contracts[0].serviceContracts);
     }
   }, [token]);
 
   //if students are ready log the results for now
-  useEffect(() => {
-    if (students?.all) {
-      console.log(students.all[0].tel);
-    }
-  }, [students]);
+  // useEffect(() => {
+  //   if (students) {
+  //     const filterStudents = filteredStudentsGloabl(students, "275155642");
+  //     // console.log(filterStudents);
+  //   }
+  // }, [students]);
 
+  const MemorizedFilter = useMemo(() => Filter, []);
   return (
     <>
       <Head>
         <title>Messagerie</title>
       </Head>
+      <SmsModal />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Messagerie</h1>
@@ -77,15 +82,12 @@ const SmsPage = () => {
         </div>
       </div>
       <div className="mt-8 flex flex-col">
-        <Filter />
-        <TableEleveSMS students={students.students} />
+        <MemorizedFilter />
+        <TableEleveSMS />
       </div>
     </>
   );
 };
-
-SmsPage.layout = "GlobalLayout";
-export default SmsPage;
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -109,3 +111,6 @@ const SendButton = ({ canSend }) => {
     </button>
   );
 };
+
+SmsPage.layout = "GlobalLayout";
+export default SmsPage;
