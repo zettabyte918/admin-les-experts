@@ -3,9 +3,7 @@ import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/outline";
 
-function SmsModal() {
-  const [open, setOpen] = useState(true);
-
+function SmsModal({ open, setOpen }) {
   const cancelButtonRef = useRef(null);
 
   return (

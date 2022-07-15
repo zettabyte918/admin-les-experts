@@ -24,6 +24,7 @@ const SmsPage = () => {
   } = useSMSApi();
 
   const { getTokenSMS, getBalance, getAllStudents } = useApi();
+  const [open, setOpen] = useState(false);
 
   // orange api token
 
@@ -69,7 +70,7 @@ const SmsPage = () => {
       <Head>
         <title>Messagerie</title>
       </Head>
-      <SmsModal />
+      <SmsModal open={open} setOpen={setOpen} />
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Messagerie</h1>
@@ -79,7 +80,11 @@ const SmsPage = () => {
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <SendButton selected={selectedStudents} />
+          <SendButton
+            selected={selectedStudents}
+            open={open}
+            setOpen={setOpen}
+          />
         </div>
       </div>
       <div className="mt-8 flex flex-col">
@@ -94,13 +99,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SendButton = ({ selected }) => {
+const SendButton = ({ selected, setOpen }) => {
   let canSend = !(selected.length > 0);
 
   return (
     <button
       // onMouseOver={() => alert("hii")}
       disabled={canSend}
+      onClick={() => setOpen(true)}
       type="button"
       className={classNames(
         canSend
