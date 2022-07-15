@@ -20,6 +20,7 @@ const SmsPage = () => {
     setCanSend,
     students,
     setStudents,
+    selectedStudents,
   } = useSMSApi();
 
   const { getTokenSMS, getBalance, getAllStudents } = useApi();
@@ -78,7 +79,7 @@ const SmsPage = () => {
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-          <SendButton canSend={canSend} />
+          <SendButton selected={selectedStudents} />
         </div>
       </div>
       <div className="mt-8 flex flex-col">
@@ -93,7 +94,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SendButton = ({ canSend }) => {
+const SendButton = ({ selected }) => {
+  let canSend = !(selected.length > 0);
+
   return (
     <button
       // onMouseOver={() => alert("hii")}
@@ -106,7 +109,7 @@ const SendButton = ({ canSend }) => {
         "inline-flex items-center justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm  focus:outline-none focus:ring-2  focus:ring-offset-2 sm:w-auto"
       )}
     >
-      Envoyer
+      Envoyer {selected.length > 0 ? selected.length : ""}
       <ChatAlt2Icon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
     </button>
   );
