@@ -112,7 +112,7 @@ function AddPayment() {
                       <div className="py-3 text-left">
                         <button
                           type="button"
-                          disabled={!dateRange[0] || !dateRange[0]}
+                          disabled={!dateRange[0] || !dateRange[1]}
                           onClick={() => setDateRange([null, null])}
                           className={classNames(
                             dateRange[0] || dateRange[0]
