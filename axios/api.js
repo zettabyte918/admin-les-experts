@@ -201,6 +201,32 @@ export const ApiContext = ({ children }) => {
     return router.push("/eleves");
   };
 
+  const getAllStudentsPayments = async (id) => {
+    const response = await api.get(`/experts-users/payments`);
+    if (response) return response;
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/");
+  };
+
+  const deletePaymentById = async (id) => {
+    if (id) {
+      const response = await api.delete(`/payments/${id}`);
+      if (response.status === 200) {
+        return router.reload(window.location.pathname);
+      }
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+    return router.push("/eleves");
+  };
+
   const addPayment = async (startDate, endDate, id) => {
     if (!startDate || !endDate || !id) return;
 
@@ -293,6 +319,8 @@ export const ApiContext = ({ children }) => {
 
         getAllPayments,
         addPayment,
+        deletePaymentById,
+        getAllStudentsPayments,
       }}
     >
       {children}
