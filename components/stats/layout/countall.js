@@ -11,7 +11,7 @@ const AllStudentsCount = ({ count }) => {
           <UserGroupIcon className="h-6 w-6 text-white" aria-hidden="true" />
         </div>
         <p className="ml-16 text-sm font-medium text-gray-500 truncate">
-          Nombre total d'élèves
+          Nombre total d&apos;élèves
         </p>
       </dt>
       <dd className="ml-16 pb-6 flex items-baseline sm:pb-7">
