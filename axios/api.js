@@ -3,6 +3,12 @@ import { useSession, signOut } from "next-auth/react";
 import { useNotification } from "../components/Notification";
 import { useRouter } from "next/router";
 
+const AddOneDay = (date) => {
+  let d = new Date(date);
+  d.setDate(d.getDate() + 1);
+  return d.toISOString();
+};
+
 import axios from "axios";
 
 export const strapiApi = createContext();
@@ -67,7 +73,7 @@ export const ApiContext = ({ children }) => {
       ...inputValues,
       pack: selectedPack,
       group: selectedGroup,
-      dateRange,
+      dateRange: [AddOneDay(dateRange[0]), AddOneDay(dateRange[1])],
     };
     const response = await api.post("/experts-users", JSON.stringify(user));
     if (response.status === 200) {
@@ -232,8 +238,8 @@ export const ApiContext = ({ children }) => {
 
     const data = {
       data: {
-        debut: startDate,
-        fin: endDate,
+        debut: AddOneDay(startDate),
+        fin: AddOneDay(endDate),
         student: id,
       },
     };
