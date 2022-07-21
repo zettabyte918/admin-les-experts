@@ -3,11 +3,25 @@
 ```bash
 # path: /etc/nginx/sites-available/strapi.conf
 
+# les-experts home page
+server {
+    listen 80;
+    server_name les-experts.tn;
+
+    root /var/www/les-experts/html;
+    #index index.html;
+
+    location = / {
+        try_files $uri /index.html;
+        #try_files $uri $uri/ =404;
+    }
+}
+
 #nextjs admin panel
 server {
     # Listen HTTP
     listen 80;
-    server_name les-experts.tn;
+    server_name admin.les-experts.tn;
 
     # Proxy Config
     location / {
@@ -29,8 +43,8 @@ server {
 server {
     # Listen HTTP
     listen 80;
-    server_name admin.les-experts.tn;
-
+    server_name api.les-experts.tn;
+       
     # Proxy Config
     location / {
         proxy_pass http://localhost:1337;
@@ -46,9 +60,9 @@ server {
         proxy_pass_request_headers on;
     }
 }
-
 ```
 
 ### Copy this
 
 `nano /etc/nginx/sites-available/les-experts`
+
