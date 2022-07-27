@@ -55,7 +55,6 @@ function AddPayment() {
               as={Fragment}
               enter="transform transition ease-in-out duration-500 sm:duration-700"
               enterFrom="translate-x-full"
-              enterTo="translate-x-0"
               leave="transform transition ease-in-out duration-500 sm:duration-700"
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
@@ -112,7 +111,7 @@ function AddPayment() {
                       <div className="py-3 text-left">
                         <button
                           type="button"
-                          disabled={!dateRange[0] || !dateRange[0]}
+                          disabled={!dateRange[0]}
                           onClick={() => setDateRange([null, null])}
                           className={classNames(
                             dateRange[0] || dateRange[0]
