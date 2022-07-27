@@ -4,6 +4,7 @@ import { useNotification } from "../components/Notification";
 import { useRouter } from "next/router";
 
 const AddOneDay = (date) => {
+  if (!date) return null;
   let d = new Date(date);
   d.setDate(d.getDate() + 1);
   return d.toISOString();
