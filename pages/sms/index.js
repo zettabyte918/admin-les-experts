@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ChatAlt2Icon } from "@heroicons/react/outline";
 import { Filter, TableEleveSMS } from "../../components/table";
 import { filteredStudentsGloabl } from "../../components/table/sms/helper/filter";
-import { useSMSApi, SmsContext } from "../../context/sms";
+import { useSMSApi } from "../../context/sms";
 import { SmsModal } from "../../components/table/sms/modal";
 
 const SmsPage = () => {
@@ -14,6 +14,8 @@ const SmsPage = () => {
   const {
     token,
     setToken,
+    getBalance,
+    getTokenSMS,
     balance,
     setBalance,
     canSend,
@@ -23,7 +25,7 @@ const SmsPage = () => {
     selectedStudents,
   } = useSMSApi();
 
-  const { getTokenSMS, getBalance, getAllStudents } = useApi();
+  const { getAllStudents } = useApi();
   const [open, setOpen] = useState(false);
 
   // orange api token
@@ -42,19 +44,21 @@ const SmsPage = () => {
     };
   }, []);
 
-  //get balance and all student from les-experts backend
+  useEffect(async () => {
+    const students = await getAllStudents();
+    setStudents(students.data);
+  }, []);
+
+  //get balance and all students from les-experts backend
   useEffect(async () => {
     if (token) {
-      const response = await getBalance(`${token}`);
-      const students = await getAllStudents();
-
+      const response = await getBalance();
       if (response.code === 41) {
         return;
       }
-      setStudents(students.data);
       setBalance(response.data.partnerContracts.contracts[0].serviceContracts);
     }
-  }, [token]);
+  }, [token, selectedStudents]);
 
   //if students are ready log the results for now
   // useEffect(() => {
@@ -81,6 +85,7 @@ const SmsPage = () => {
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <SendButton
+            balance={balance}
             selected={selectedStudents}
             open={open}
             setOpen={setOpen}
@@ -99,8 +104,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const SendButton = ({ selected, setOpen }) => {
-  let canSend = !(selected.length > 0);
+const SendButton = ({ balance, selected, setOpen }) => {
+  let canSend = !(
+    selected.length > 0 && balance[0]?.availableUnits > selected.length
+  );
 
   return (
     <button

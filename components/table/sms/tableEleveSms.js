@@ -189,7 +189,8 @@ const Information = ({ selectedStudents, balance }) => {
         Élève sélectionné: {selectedStudents.length}
       </span>
       <span className="bg-cyan-100 text-cyan-800 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium">
-        Messages disponibles: {balance ? balance[0].availableUnits : "..."}
+        Messages disponibles:{" "}
+        {balance ? balance[0].availableUnits : "Chargement en cours..."}
       </span>
     </div>
   );
