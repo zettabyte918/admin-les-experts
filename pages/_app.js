@@ -4,21 +4,24 @@ import { SessionProvider } from "next-auth/react";
 import { GlobalLayout } from "../components/layout";
 import { NotificationProvider, Notification } from "../components/Notification";
 import { ApiContext } from "../axios";
-
+import { SmsContext } from "../context/sms";
 const layouts = {
   GlobalLayout,
 };
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const Layout = layouts[Component?.layout] || Fragment;
+
   return (
     <SessionProvider session={session}>
       <NotificationProvider>
         <Notification />
         <ApiContext>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <SmsContext>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </SmsContext>
         </ApiContext>
       </NotificationProvider>
     </SessionProvider>

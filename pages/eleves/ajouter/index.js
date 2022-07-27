@@ -292,7 +292,7 @@ const AjouterEleve = () => {
                         <div className="px-4 py-3 text-right sm:px-6">
                           <button
                             type="button"
-                            disabled={!dateRange[0] || !dateRange[0]}
+                            disabled={!dateRange[0] || !dateRange[1]}
                             onClick={() => setDateRange([null, null])}
                             className={classNames(
                               dateRange[0] || dateRange[0]

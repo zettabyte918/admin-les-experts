@@ -12,6 +12,15 @@ export const COLUMNS = [
   {
     Header: "Description",
     accessor: "description",
+    Cell: ({ value }) => {
+      const [mot1, mot2, mot3, mot4, mot5] = value.split(" ");
+
+      return (
+        <span title={value}>
+          {`${mot1} ${mot2} ${mot3} ${mot4} ${mot5}...`}
+        </span>
+      );
+    },
   },
   // {
   //   Header: "Eleves",
