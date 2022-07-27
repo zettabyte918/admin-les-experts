@@ -123,7 +123,7 @@ const TableEleveSMS = () => {
                 {filteredStudentsTable.length > 0 ? (
                   filteredStudentsTable.map((person) => (
                     <tr
-                      key={person.tel}
+                      key={person.id}
                       className={
                         selectedStudents.includes(person)
                           ? "bg-gray-50"
