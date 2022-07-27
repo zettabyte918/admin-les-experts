@@ -44,7 +44,7 @@ const TableEleveSMS = () => {
   }, [selectedStudents, students]);
 
   function toggleAll() {
-    setSelectedStudents(checked || indeterminate ? [] : students);
+    setSelectedStudents(checked || indeterminate ? [] : filteredStudentsTable);
     setChecked(!checked && !indeterminate);
     setIndeterminate(false);
   }
