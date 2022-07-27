@@ -62,7 +62,7 @@ const TableEleve = memo(({ datas }) => {
           leaveFrom="translate-x-0 opacity-100"
           leaveTo="translate-x-2 opacity-0"
         >
-          <div className="flex flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-2">
+          <div className="flex z-10 flex-col md:flex-row md:items-center space-y-2 md:space-y-0 md:space-x-2">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
             <DropDownFilter setFilter={setGlobalFilter} />
           </div>
