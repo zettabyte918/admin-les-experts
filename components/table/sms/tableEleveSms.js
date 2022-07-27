@@ -32,6 +32,7 @@ const TableEleveSMS = () => {
   const checkbox = useRef();
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
+  const [filteredStudentsTable, setFilteredStudentsTable] = useState([]);
 
   useLayoutEffect(() => {
     const isIndeterminate =
@@ -52,7 +53,14 @@ const TableEleveSMS = () => {
     setSelectedStudents([]);
   }, []);
 
-  let filteredStudents = filteredStudentsGloabl(students, searchInputQuery);
+  useEffect(() => {
+    setFilteredStudentsTable(students);
+  }, [students]);
+
+  useEffect(() => {
+    let filteredStudents = filteredStudentsGloabl(students, searchInputQuery);
+    setFilteredStudentsTable(filteredStudents);
+  }, [searchInputQuery]);
 
   return (
     <div className="flex flex-col space-y-0.5">
@@ -112,8 +120,8 @@ const TableEleveSMS = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {filteredStudents.length > 0 ? (
-                  filteredStudents.map((person) => (
+                {filteredStudentsTable.length > 0 ? (
+                  filteredStudentsTable.map((person) => (
                     <tr
                       key={person.email}
                       className={
