@@ -19,26 +19,35 @@ function classNames(...classes) {
 }
 
 export function GlobalLayout({ children }) {
-  const { status } = useSession();
+  const { status, data } = useSession();
   const router = useRouter();
   const { pathname } = router;
 
   const navigation = [
-    { name: "Dashboard", href: "/", icon: HomeIcon, current: pathname === "/" },
+    {
+      name: "Dashboard",
+      role: ["admin"],
+      href: "/stats",
+      icon: HomeIcon,
+      current: pathname === "/stats",
+    },
     {
       name: "Groups",
+      role: ["admin"],
       href: "/groupes",
       icon: FolderIcon,
       current: pathname.startsWith("/groupes"),
     },
     {
       name: "Eleves",
+      role: ["admin"],
       href: "/eleves",
       icon: UsersIcon,
       current: pathname.startsWith("/eleves"),
     },
     {
       name: "Messagerie",
+      role: ["admin"],
       href: "/sms",
       icon: ChatAltIcon,
       current: pathname.startsWith("/sms"),
@@ -181,24 +190,27 @@ export function GlobalLayout({ children }) {
                 enterTo="translate-y-0 opacity-100"
               >
                 <nav className="flex-1 px-2 space-y-1">
-                  {navigation?.map((item, id) => (
-                    <Link key={id} href={item.href}>
-                      <a
-                        className={classNames(
-                          item.current
-                            ? "bg-indigo-800 text-white"
-                            : "text-indigo-100 hover:bg-indigo-600",
-                          "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                        )}
-                      >
-                        <item.icon
-                          className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </a>
-                    </Link>
-                  ))}
+                  {navigation?.map((item, id) => {
+                    if (item.role.includes(data?.user?.role?.name))
+                      return (
+                        <Link key={id} href={item.href}>
+                          <a
+                            className={classNames(
+                              item.current
+                                ? "bg-indigo-800 text-white"
+                                : "text-indigo-100 hover:bg-indigo-600",
+                              "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                            )}
+                          >
+                            <item.icon
+                              className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                          </a>
+                        </Link>
+                      );
+                  })}
                 </nav>
               </Transition>
             </div>
@@ -264,6 +276,20 @@ export function GlobalLayout({ children }) {
                   leaveTo="transform opacity-0 scale-95"
                 >
                   <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <p class="py-3 px-3.5 truncate text-sm font-normal">
+                      <span class="block mb-0.5 text-xs text-gray-500">
+                        Connecté en tant que
+                      </span>
+                      <span class="font-semibold">
+                        {status === "authenticated" ? data.user.name_eleve : ""}
+                        <br />
+                        <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
+                          {status === "authenticated"
+                            ? data.user.role.name
+                            : ""}
+                        </span>
+                      </span>
+                    </p>
                     {adminNavigation.map((item) => (
                       <Menu.Item key={item.name}>
                         {({ active }) => (
