@@ -307,6 +307,25 @@ export const ApiContext = ({ children }) => {
     return router.push("/groupes?error=invalide_id_update");
   };
 
+  const deleteGroupById = async (id) => {
+    if (id) {
+      const response = await api.delete(`/groupes/${id}`);
+      if (response.status === 200) {
+        addNotification(
+          "SUCCESS",
+          "Succès",
+          `Groupe <b>${response.data.data.attributes.nom}</b> supprimé avec succès`
+        );
+        return router.push("/groupes");
+      }
+    }
+    addNotification(
+      "DANGER",
+      "Une erreur s'est produite",
+      "merci de rafraichir cette page"
+    );
+  };
+
   return (
     <strapiApi.Provider
       value={{
@@ -328,6 +347,7 @@ export const ApiContext = ({ children }) => {
         addPayment,
         deletePaymentById,
         getAllStudentsPayments,
+        deleteGroupById,
       }}
     >
       {children}
