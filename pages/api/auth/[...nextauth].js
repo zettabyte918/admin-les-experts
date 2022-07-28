@@ -21,14 +21,17 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/local`,
-          credentials
-        );
+        // old logic
+        // const { data } = await axios.post(
+        //   `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/local`,
+        //   credentials
+        // );
 
-        if (data) {
+        // console.log(JSON.parse(credentials.data));
+
+        if (credentials) {
           // Any object returned will be saved in `user` property of the JWT
-          return data;
+          return JSON.parse(credentials.data);
         } else {
           // If you return null or false then the credentials will be rejected
           return null;
