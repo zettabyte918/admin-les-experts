@@ -4,22 +4,50 @@ import { LockClosedIcon } from "@heroicons/react/solid";
 import { Transition } from "@headlessui/react";
 import Logo from "../../public/logo.png";
 import Head from "next/head";
+import axios from "axios";
+import { useNotification } from "../../components/Notification";
 
 export default function Signin() {
   // const [identifier, setIdentifier] = useState(null);
   // const [password, setPassword] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { addNotification } = useNotification();
 
   const identifier = useRef();
   const password = useRef();
 
-  const login = () => {
-    signIn("strapi-local", {
-      identifier: identifier.current.value,
-      password: password.current.value,
-      callbackUrl: process.env.NEXT_PUBLIC_ADMIN_PUBLIC_URL,
-    });
+  const login2 = async () => {
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/local`,
+        {
+          identifier: identifier.current.value,
+          password: password.current.value,
+        }
+      )
+      .then(function (response) {
+        signIn("strapi-local", {
+          data: JSON.stringify(response.data),
+          callbackUrl: process.env.NEXT_PUBLIC_ADMIN_PUBLIC_URL,
+        });
+      })
+      .catch(function (error) {
+        console.log(error.response.data.error);
+        addNotification(
+          "DANGER",
+          "Erreur de validation",
+          "Identifiant ou mot de passe invalide"
+        );
+      });
   };
+
+  // const login = () => {
+  //   signIn("strapi-local", {
+  //     identifier: identifier.current.value,
+  //     password: password.current.value,
+  //     callbackUrl: process.env.NEXT_PUBLIC_ADMIN_PUBLIC_URL,
+  //   });
+  // };
 
   useEffect(() => {
     setLoading(false);
@@ -100,7 +128,7 @@ export default function Signin() {
 
             <div>
               <button
-                onClick={login}
+                onClick={login2}
                 type="button"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
