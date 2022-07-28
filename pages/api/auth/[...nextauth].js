@@ -22,7 +22,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const { data } = await axios.post(
-          `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/auth/local`,
+          `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/local`,
           credentials
         );
 

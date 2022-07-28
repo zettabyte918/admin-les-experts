@@ -7,7 +7,7 @@ import { HeaderText } from "../../../components/layout";
 import { useApi } from "../../../axios";
 
 const AjouterGroupes = () => {
-  const { getGroupById, updateGroupById } = useApi();
+  const { getGroupById, updateGroupById, deleteGroupById } = useApi();
   const router = useRouter();
   const { id } = router.query;
 
@@ -26,6 +26,10 @@ const AjouterGroupes = () => {
       id,
       ...inputValues,
     });
+  };
+
+  const deleteGroup = async () => {
+    return await deleteGroupById(id);
   };
 
   useEffect(() => {
@@ -124,7 +128,14 @@ const AjouterGroupes = () => {
 
       <div className="mt-10  sm:mt-0">
         <div className="shadow overflow-hidden sm:rounded-md">
-          <div className="px-4 py-3 bg-gray-200 text-right sm:px-6">
+          <div className="flex justify-between px-4 py-3 bg-gray-200 text-right sm:px-6 space-x-2">
+            <button
+              type="button"
+              onClick={deleteGroup}
+              className="inline-flex justify-center w-full md:w-fit py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+            >
+              Supprimer ce group
+            </button>
             <button
               type="button"
               onClick={updateGroup}
