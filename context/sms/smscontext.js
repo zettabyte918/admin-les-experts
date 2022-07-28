@@ -27,6 +27,7 @@ export const SmsContext = ({ children }) => {
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [searchInputQuery, setSearchInputQuery] = useState("");
   const [received, setReceived] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   const getTokenSMS = async () => {
     var config = {
@@ -63,11 +64,12 @@ export const SmsContext = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-
+    let k = 0;
     if (students.length > 0) {
       students.map((student, i) => {
         if (!isNaN(student.tel)) {
           setTimeout(async () => {
+            k++;
             let response = await axios({
               ...config,
               data: {
@@ -81,10 +83,14 @@ export const SmsContext = ({ children }) => {
                 },
               },
             });
-
             if (response?.status === 201) {
               setReceived((prev) => [...prev, student]);
             }
+            if (k == students.length) {
+              setTimeout(() => {
+                setUpdate((prev) => !prev);
+              }, 1000);
+            } // if all messages has been send then update sms balance
           }, 1000 * i);
         }
       });
@@ -116,6 +122,7 @@ export const SmsContext = ({ children }) => {
         getBalance,
         sendSMS,
         received,
+        update, // hack to update orange balance :) sms/index.js => useEffect update balance
       }}
     >
       {children}

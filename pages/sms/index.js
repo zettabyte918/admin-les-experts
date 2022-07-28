@@ -23,6 +23,7 @@ const SmsPage = () => {
     students,
     setStudents,
     selectedStudents,
+    update,
   } = useSMSApi();
 
   const { getAllStudents } = useApi();
@@ -58,7 +59,7 @@ const SmsPage = () => {
       }
       setBalance(response.data.partnerContracts.contracts[0].serviceContracts);
     }
-  }, [token, selectedStudents]);
+  }, [token, update]);
 
   //if students are ready log the results for now
   // useEffect(() => {
