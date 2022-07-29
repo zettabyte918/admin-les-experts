@@ -5,6 +5,7 @@ import { GlobalLayout } from "../components/layout";
 import { NotificationProvider, Notification } from "../components/Notification";
 import { ApiContext } from "../axios";
 import { SmsContext } from "../context/sms";
+import { GlobalContextWrapper } from "../context/global";
 const layouts = {
   GlobalLayout,
 };
@@ -16,13 +17,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     <SessionProvider session={session}>
       <NotificationProvider>
         <Notification />
-        <ApiContext>
-          <SmsContext>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </SmsContext>
-        </ApiContext>
+        <GlobalContextWrapper>
+          <ApiContext>
+            <SmsContext>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </SmsContext>
+          </ApiContext>
+        </GlobalContextWrapper>
       </NotificationProvider>
     </SessionProvider>
   );

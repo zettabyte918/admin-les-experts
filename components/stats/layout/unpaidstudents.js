@@ -5,7 +5,6 @@ import { UserRemoveIcon } from "@heroicons/react/outline";
 const AllUnpaidStudents = ({ unpaid }) => {
   const [open, setOpen] = useState(false);
   const { addNotification } = useNotification();
-
   return (
     <>
       <ModalUnpaidStudents open={open} setOpen={setOpen} unpaid={unpaid} />

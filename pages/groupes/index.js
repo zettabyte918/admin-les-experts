@@ -20,7 +20,6 @@ function Groupes() {
     setReadyData(true);
   }, [session]);
 
-  console.log(groups.length === 0);
   return (
     <>
       <Head>
