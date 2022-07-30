@@ -8,18 +8,15 @@ import axios from "axios";
 import { useNotification } from "../../components/Notification";
 
 export default function Signin() {
-  // const [identifier, setIdentifier] = useState(null);
-  // const [password, setPassword] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { addNotification } = useNotification();
 
   const identifier = useRef();
   const password = useRef();
 
-  const login2 = async () => {
+  const login = async () => {
     axios
       .post(
-        `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/local`,
+        `${process.env.NEXT_PUBLIC_STRAPI_BACKEND_API_URL}/experts-users/admin`,
         {
           identifier: identifier.current.value,
           password: password.current.value,
@@ -41,17 +38,6 @@ export default function Signin() {
       });
   };
 
-  // const login = () => {
-  //   signIn("strapi-local", {
-  //     identifier: identifier.current.value,
-  //     password: password.current.value,
-  //     callbackUrl: process.env.NEXT_PUBLIC_ADMIN_PUBLIC_URL,
-  //   });
-  // };
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
   return (
     <>
       <Head>
@@ -128,7 +114,7 @@ export default function Signin() {
 
             <div>
               <button
-                onClick={login2}
+                onClick={login}
                 type="button"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >

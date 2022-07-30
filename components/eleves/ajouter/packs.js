@@ -12,7 +12,7 @@ const Packs = memo(({ selected, setSelected }) => {
 
   const fetchPacks = async () => {
     const pa = await api.get("/packs");
-    setPack(pa.data.data);
+    setPack(pa.data);
   };
   useEffect(async () => {
     await fetchPacks();
@@ -58,7 +58,7 @@ const Packs = memo(({ selected, setSelected }) => {
                       "block text-sm font-medium"
                     )}
                   >
-                    {pack?.attributes?.nom}
+                    {pack?.nom}
                   </RadioGroup.Label>
                   <RadioGroup.Description
                     as="span"
@@ -68,7 +68,7 @@ const Packs = memo(({ selected, setSelected }) => {
                     )}
                   >
                     <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-                      {pack?.attributes?.description}
+                      {pack?.description}
                     </span>
                   </RadioGroup.Description>
                 </div>
