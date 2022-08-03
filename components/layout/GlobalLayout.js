@@ -10,6 +10,7 @@ import {
   UsersIcon,
   XIcon,
   ChatAltIcon,
+  UploadIcon,
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { useSession, signOut } from "next-auth/react";
@@ -51,6 +52,13 @@ export function GlobalLayout({ children }) {
       href: "/sms",
       icon: ChatAltIcon,
       current: pathname.startsWith("/sms"),
+    },
+    {
+      name: "Fichier",
+      role: ["admin", "prof"],
+      href: "/fichier",
+      icon: UploadIcon,
+      current: pathname.startsWith("/fichier"),
     },
   ];
   const adminNavigation = [{ name: "se déconnecter", href: "#" }];
